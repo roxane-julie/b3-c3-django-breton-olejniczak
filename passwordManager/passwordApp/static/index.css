@@ -1,0 +1,95 @@
+@font-face {
+    font-family: 'RingBearer';
+    src: url('./fonts/RingbearerMedium-51mgZ.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'PlaneWalker';
+    src: url('./fonts/Planewalker-38m6.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'NeuSharp';
+    src: url('./fonts/NeusharpBold-7B8RV.otf') format('truetype');
+}
+
+h1 {
+    font-family: 'RingBearer', sans-serif;
+    font-size: 2em;
+    font-weight: 300;
+    color: #111719;
+    text-shadow: 0 0 5px rgba(248, 247, 247, 0.733);
+    /* color: #e2e2e2; */
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #ead7c0;
+    background-image: url("background_mountain.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+p{
+    color: #e2e2e2;
+    font-family: 'NeuSharp';
+}
+
+body li{
+    font-size: 1.1em;
+    color: #e2e2e2;
+    font-family: 'PlaneWalker'!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0!important;
+}
+
+ul{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.subscribe-btn{
+    width: 10rem;
+    border-radius: 12px;
+    padding: 1em;
+    color: #e2e2e2;
+    background-color: #F07718;
+    border: none!important;
+    cursor: pointer;
+}
+
+.svg-icon {
+    width: 6%!important;
+    margin-right: 10px;
+}
+
+.home-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 80%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.home-container img{
+    width: 20%;
+}
+
+h3{
+    font-weight: 200;
+    font-size: 2.5em;
+    margin: 0.5em 0;
+}
