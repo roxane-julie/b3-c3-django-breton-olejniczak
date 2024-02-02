@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,5 +10,40 @@
 </head>
 <body>
     <h1>Inscrivez-vous sur ShallNotPass</h1>
+    <form action="{% url 'signUp' %}" method="post">
+        {% csrf_token %}
+        {{ form.username.label_tag }}<br>
+        {{ form.username }}<br>
+        {{ form.email.label_tag }}<br>
+        {{ form.email }}<br>
+        {{ form.password.label_tag }}<br>
+        {{ form.password }}<br>
+        <input type="submit" value="S'inscrire">
+    </form>
+    <!-- <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Inscription réussie !</p>
+        </div> -->
+    </div>
+    <!-- <script>
+        var modal = document.getElementById("successModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        document.querySelector("form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            modal.style.display = "block";
+        });
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script> -->
 </body>
 </html>
