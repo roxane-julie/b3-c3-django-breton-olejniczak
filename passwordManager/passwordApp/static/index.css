@@ -24,6 +24,7 @@ h1 {
 
 body{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -58,14 +59,24 @@ ul{
     list-style: none;
 }
 
-.subscribe-btn{
+.subscribe-btn {
     width: 10rem;
+    height: 40px;
+    font-size: 0.8em;
     border-radius: 12px;
-    padding: 1em;
+    padding: 10px;
     color: #e2e2e2;
     background-color: #F07718;
     border: none!important;
     cursor: pointer;
+    font-family: 'NeuSharp';
+    transition: font-size 0.3s ease; /* Suppression de la transition sur la bordure */
+}
+
+.subscribe-btn:hover {
+    font-size: 0.9em;
+    box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
+
 }
 
 .svg-icon {
@@ -84,12 +95,12 @@ ul{
     margin: auto;
 }
 
-.home-container img{
-    width: 20%;
-}
-
 h3{
     font-weight: 200;
     font-size: 2.5em;
     margin: 0.5em 0;
+}
+
+.logo{
+    width: 20%;
 }
