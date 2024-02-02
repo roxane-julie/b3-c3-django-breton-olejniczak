@@ -1,8 +1,5 @@
 from django.db import models
-
-# Create your models here.
-import datetime
-from django.db import models
+import bcrypt
 
 # Create your models here.
 class PassWordManagerDataModel(models.Model):
@@ -22,3 +19,10 @@ class PassWordManagerDataModel(models.Model):
 
     def set_website_name(self, website_name):
         self.websiteName = website_name
+
+    def set_password(self, raw_password):
+        hashed = bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt())
+        self.password = hashed.decode('utf-8')
+
+    def check_password(self, raw_password):
+        return bcrypt.checkpw(raw_password.encode('utf-8'), self.password.encode('utf-8'))
