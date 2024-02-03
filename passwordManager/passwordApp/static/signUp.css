@@ -56,6 +56,21 @@ label {
     z-index: 5;
 }
 
+.nav-to-login {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #1367a2;
+    font-family: "Planewalker";
+    margin-left: 1em;
+}
+
+.nav-to-login:hover{
+    color: #e3901b; 
+}
+
+.to-login{
+    font-family: "Planewalker";
+}
 
 
 input.submit-btn {
@@ -72,6 +87,7 @@ input.submit-btn {
     font-family: 'NeuSharp'!important;
     transition: font-size 0.3s ease;
     margin-top: 1.5em;
+    margin-bottom: 1.5em;
 }
 
 input.submit-btn:hover {
