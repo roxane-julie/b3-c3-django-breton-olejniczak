@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'index' %}">Accueil</a></li>
+            <li><a href="{% url 'signUp' %}">S'inscrire</a></li>
+            <li><a href="{% url 'signIn' %}">Se connecter</a></li>
+            <li><a href="{% url 'myPasswordsManager' %}">Manager de mots de passe</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

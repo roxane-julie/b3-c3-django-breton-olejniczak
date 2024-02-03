@@ -9,6 +9,7 @@
     <title>ShallNotPass</title>
 </head>
 <body>
+    {% include 'navigation.html' %}
         <form action="{% url 'signUp' %}" method="post">
             <h1>INSCRIPTION</h1>
             {% csrf_token %}
