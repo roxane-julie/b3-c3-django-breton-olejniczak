@@ -9,16 +9,25 @@
     <title>ShallNotPass</title>
 </head>
 <body>
-    <h1>Inscrivez-vous sur ShallNotPass</h1>
+    <h1>INSCRIPTION</h1>
     <form action="{% url 'signUp' %}" method="post">
         {% csrf_token %}
-        {{ form.username.label_tag }}<br>
-        {{ form.username }}<br>
-        {{ form.email.label_tag }}<br>
-        {{ form.email }}<br>
-        {{ form.password.label_tag }}<br>
-        {{ form.password }}<br>
-        <input type="submit" value="S'inscrire">
+        {{ form.username.label_tag }}
+        <div class="input-container">
+            <img class="input-icon user-icn" src="{% static 'user-regular.svg' %}" alt="description de l'image"><br>
+            {{ form.username }}<br>
+        </div>
+        {{ form.email.label_tag }}
+        <div class="input-container">
+            <img class="input-icon mail-icn" src="{% static 'envelope-regular.svg' %}" alt="description de l'image"><br>
+            {{ form.email }}<br>
+        </div>
+        {{ form.password.label_tag }}
+        <div class="input-container">
+            <img class="input-icon" src="{% static 'padlock-outlined-svgrepo-com.svg' %}" alt="description de l'image"><br>
+            {{ form.password }}<br>
+        </div>
+        <input class="submit-btn" type="submit" value="S'inscrire">
     </form>
     <!-- <div id="successModal" class="modal">
         <div class="modal-content">

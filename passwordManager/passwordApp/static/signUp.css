@@ -1,3 +1,144 @@
+@font-face {
+    font-family: 'RingBearer';
+    src: url('./fonts/RingbearerMedium-51mgZ.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'PlaneWalker';
+    src: url('./fonts/Planewalker-38m6.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'NeuSharp';
+    src: url('./fonts/NeusharpBold-7B8RV.otf') format('truetype');
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e2e2e2;
+}
+
+h1{
+    font-size: 1.5em;
+    font-family: 'RingBearer';
+    margin: 1.2em 0;
+}
+
+label {
+    font-family: 'RingBearer';
+    font-size: 0.8em;
+    background-color: #e2e2e2;
+    position: relative;
+    top:0.7em;
+    left: 4.5em;
+    padding: 0 1em;
+    align-self: flex-start;
+    z-index: 5;
+}
+
+
+
+input.submit-btn {
+    width: 10rem;
+    height: 40px;
+    align-self: center;
+    font-size: 0.8em;
+    border-radius: 12px;
+    padding: 10px;
+    color: #e2e2e2!important;
+    background-color: #F07718!important;
+    border: none!important;
+    cursor: pointer;
+    font-family: 'NeuSharp'!important;
+    transition: font-size 0.3s ease; /* Suppression de la transition sur la bordure */
+}
+
+input.submit-btn:hover {
+    font-size: 0.9em;
+    box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
+
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    background: #e2e2e2; /* fond transparent */
+    border: none; /* pas de bordure */
+    border-radius: 20px;
+    border: 1px solid #262626;
+    padding-left: 5.5em;
+    width: 100%;
+    height: 3em;
+    font-family: 'NeuSharp';
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+    outline: none; /* pas de contour lors du focus */
+    font-family: 'NeuSharp';
+    width: 100%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-container{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2em;
+    margin-left: 0;
+    align-self: center;
+    width: 100%;
+    left: -1em;
+}
+
+::placeholder {
+    color: #969696;
+    opacity: 1; /* Firefox */
+    font-family: 'NeuSharp';
+    font-weight: 400;
+}
+
+/* Internet Explorer 10-11 */
+:-ms-input-placeholder {
+    color: #969696;
+    font-family: 'NeuSharp';
+    font-weight: 400;
+}
+
+/* Edge */
+::-ms-input-placeholder {
+    color: #969696;
+    font-family: 'NeuSharp';
+    font-weight: 400;
+}
+
+.input-icon{
+    position: relative;
+    width: 20px;
+    padding-right: 15px;
+    border-right: 1px solid #000;
+    margin: 0;
+    top: 0;
+    left: 3em;
+}
+
+.user-icn{
+    width: 15px;
+}
+
+.mail-icn{
+    width: 15px;
+}
+
 .modal {
     display: none; 
     position: fixed; 
