@@ -19,7 +19,10 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #e2e2e2;
+    background-image: url("background_inside.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 h1{
@@ -28,13 +31,23 @@ h1{
     margin: 1.2em 0;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    border-radius: 10px;
+    background-color: rgba(237, 216, 184, 0.5);
+    width: 30%;
+}
+
 label {
     font-family: 'RingBearer';
     font-size: 0.8em;
-    background-color: #e2e2e2;
     position: relative;
-    top:0.7em;
-    left: 4.5em;
+    top:-0.7em;
+    left: 1.5em;
     padding: 0 1em;
     align-self: flex-start;
     z-index: 5;
@@ -49,8 +62,8 @@ input.submit-btn {
     font-size: 0.8em;
     border-radius: 12px;
     padding: 10px;
-    color: #e2e2e2!important;
-    background-color: #F07718!important;
+    color: #f3e6ca!important;
+    background-color: #e4782f!important;
     border: none!important;
     cursor: pointer;
     font-family: 'NeuSharp'!important;
@@ -64,11 +77,11 @@ input.submit-btn:hover {
 }
 
 input[type="text"], input[type="email"], input[type="password"] {
-    background: #e2e2e2; /* fond transparent */
+    background-color: rgba(237, 216, 184, 0.5);
     border: none; /* pas de bordure */
     border-radius: 20px;
     border: 1px solid #262626;
-    padding-left: 5.5em;
+    padding-left: 4.5em;
     width: 100%;
     height: 3em;
     font-family: 'NeuSharp';
@@ -80,12 +93,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     width: 100%;
 }
 
-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
 .input-container{
     display: flex;
@@ -101,7 +108,7 @@ form{
 }
 
 ::placeholder {
-    color: #969696;
+    color: #8C8C7E;
     opacity: 1; /* Firefox */
     font-family: 'NeuSharp';
     font-weight: 400;
@@ -109,14 +116,14 @@ form{
 
 /* Internet Explorer 10-11 */
 :-ms-input-placeholder {
-    color: #969696;
+    color: #8C8C7E;
     font-family: 'NeuSharp';
     font-weight: 400;
 }
 
 /* Edge */
 ::-ms-input-placeholder {
-    color: #969696;
+    color: #8C8C7E;
     font-family: 'NeuSharp';
     font-weight: 400;
 }

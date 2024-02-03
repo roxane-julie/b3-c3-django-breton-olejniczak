@@ -9,32 +9,31 @@
     <title>ShallNotPass</title>
 </head>
 <body>
-    <h1>INSCRIPTION</h1>
-    <form action="{% url 'signUp' %}" method="post">
-        {% csrf_token %}
-        {{ form.username.label_tag }}
-        <div class="input-container">
-            <img class="input-icon user-icn" src="{% static 'user-regular.svg' %}" alt="description de l'image"><br>
-            {{ form.username }}<br>
-        </div>
-        {{ form.email.label_tag }}
-        <div class="input-container">
-            <img class="input-icon mail-icn" src="{% static 'envelope-regular.svg' %}" alt="description de l'image"><br>
-            {{ form.email }}<br>
-        </div>
-        {{ form.password.label_tag }}
-        <div class="input-container">
-            <img class="input-icon" src="{% static 'padlock-outlined-svgrepo-com.svg' %}" alt="description de l'image"><br>
-            {{ form.password }}<br>
-        </div>
-        <input class="submit-btn" type="submit" value="S'inscrire">
-    </form>
+        <form action="{% url 'signUp' %}" method="post">
+            <h1>INSCRIPTION</h1>
+            {% csrf_token %}
+            {{ form.username.label_tag }}
+            <div class="input-container">
+                <img class="input-icon user-icn" src="{% static 'user-regular.svg' %}" alt="description de l'image"><br>
+                {{ form.username }}<br>
+            </div>
+            {{ form.email.label_tag }}
+            <div class="input-container">
+                <img class="input-icon mail-icn" src="{% static 'envelope-regular.svg' %}" alt="description de l'image"><br>
+                {{ form.email }}<br>
+            </div>
+            {{ form.password.label_tag }}
+            <div class="input-container">
+                <img class="input-icon" src="{% static 'padlock-outlined-svgrepo-com.svg' %}" alt="description de l'image"><br>
+                {{ form.password }}<br>
+            </div>
+            <input class="submit-btn" type="submit" value="S'inscrire">
+        </form>
     <!-- <div id="successModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Inscription réussie !</p>
         </div> -->
-    </div>
     <!-- <script>
         var modal = document.getElementById("successModal");
         var span = document.getElementsByClassName("close")[0];
