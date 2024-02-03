@@ -29,12 +29,12 @@
             </div>
             <input class="submit-btn" type="submit" value="S'inscrire">
         </form>
-    <!-- <div id="successModal" class="modal">
+   <div id="successModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Inscription réussie !</p>
-        </div> -->
-    <!-- <script>
+        </div>
+    <script>
         var modal = document.getElementById("successModal");
         var span = document.getElementsByClassName("close")[0];
 
@@ -52,6 +52,18 @@
                 modal.style.display = "none";
             }
         }
-    </script> -->
+        document.querySelector("form").addEventListener("submit", function(event) {
+    var passwordInput = document.querySelector('input[type="password"]');
+    var password = passwordInput.value;
+    var regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+    if (!regex.test(password)) {
+        var errorDiv = document.createElement("div");
+        errorDiv.className = "div-error"; // Ajoute la classe "div-error" à la div
+        errorDiv.textContent = "Le mot de passe doit contenir au moins 8 caractères, un caractère spécial, une majuscule et un nombre.";
+        passwordInput.parentNode.insertBefore(errorDiv, passwordInput.nextSibling);
+        event.preventDefault();
+    }
+});
+    </script>
 </body>
 </html>
