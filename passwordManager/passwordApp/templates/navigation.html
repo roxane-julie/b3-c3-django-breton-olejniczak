@@ -11,6 +11,9 @@
             <li><a href="{% url 'signUp' %}">S'inscrire</a></li>
             <li><a href="{% url 'signIn' %}">Se connecter</a></li>
             <li><a href="{% url 'myPasswordsManager' %}">Manager de mots de passe</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'signOut' %}">Se déconnecter</a></li>
+            {% endif %}
         </ul>
     </nav>
 </body>

@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from .forms import SignUpForm
+from .forms import SignUpForm, LoginForm
 from django.contrib.auth.hashers import make_password
 
 def index(request):
@@ -37,3 +37,30 @@ def signUp(request):
         form = SignUpForm()
 
     return render(request, 'signUp.html', {'form': form})
+
+def signIn(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # Traitement des données du formulaire
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            # Authentifier l'utilisateur
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                # Connecter l'utilisateur
+                login(request, user)
+                return redirect('myPasswordsManager')
+            else:
+                # Retourner une erreur si l'utilisateur n'est pas trouvé
+                form.add_error(None, 'Invalid username or password')
+    else:
+        form = LoginForm()
+
+    return render(request, 'signIn.html', {'form': form})
+
+def signOut(request):
+    logout(request)
+    return redirect('index')

@@ -1,0 +1,216 @@
+@font-face {
+    font-family: 'RingBearer';
+    src: url('./fonts/RingbearerMedium-51mgZ.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'PlaneWalker';
+    src: url('./fonts/Planewalker-38m6.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'NeuSharp';
+    src: url('./fonts/NeusharpBold-7B8RV.otf') format('truetype');
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("background_inside.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1{
+    font-size: 1.2em;
+    font-family: 'RingBearer';
+    margin-top: 0;
+    margin-bottom: 1.5em;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 1.5em;
+    border-radius: 10px;
+    background-color: rgba(237, 216, 184, 0.5);
+    width: 25%;
+    top: 2em;
+}
+
+label {
+    font-family: 'RingBearer';
+    font-size: 0.8em;
+    position: relative;
+    top:-0.7em;
+    left: 1.5em;
+    padding: 0 1em;
+    align-self: flex-start;
+    z-index: 5;
+}
+
+.nav-to-login {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #1367a2;
+    font-family: "Planewalker";
+    margin-left: 1em;
+}
+
+.nav-to-login:hover{
+    color: #e3901b; 
+}
+
+.to-login{
+    font-family: "Planewalker";
+}
+
+
+input.submit-btn {
+    width: 10rem;
+    height: 40px;
+    align-self: center;
+    font-size: 0.8em;
+    border-radius: 12px;
+    padding: 10px;
+    color: #f3e6ca!important;
+    background-color: #e4782f!important;
+    border: none!important;
+    cursor: pointer;
+    font-family: 'NeuSharp'!important;
+    transition: font-size 0.3s ease;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+input.submit-btn:hover {
+    font-size: 0.9em;
+    box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
+
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    background-color: rgba(237, 216, 184, 0.5);
+    border: none; /* pas de bordure */
+    border-radius: 20px;
+    border: 1px solid #262626;
+    padding-left: 4.5em;
+    width: 100%;
+    height: 3em;
+    font-family: 'NeuSharp';
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+    outline: none; /* pas de contour lors du focus */
+    font-family: 'NeuSharp';
+    width: 100%;
+    border: 1px solid #3a9594;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+
+
+.input-container{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5em;
+    margin-left: 0;
+    align-self: center;
+    width: 100%;
+    left: -1em;
+}
+
+::placeholder {
+    color: #8C8C7E;
+    opacity: 1; /* Firefox */
+    font-family: 'NeuSharp';
+    font-weight: 400;
+}
+
+/* Internet Explorer 10-11 */
+:-ms-input-placeholder {
+    color: #8C8C7E;
+    font-family: 'NeuSharp';
+    font-weight: 400;
+}
+
+/* Edge */
+::-ms-input-placeholder {
+    color: #8C8C7E;
+    font-family: 'NeuSharp';
+    font-weight: 400;
+}
+
+.input-icon{
+    position: relative;
+    width: 20px;
+    padding-right: 15px;
+    border-right: 1px solid #000;
+    margin: 0;
+    top: 0;
+    left: 3em;
+}
+
+.user-icn{
+    width: 15px;
+}
+
+.mail-icn{
+    width: 15px;
+}
+
+.div-error{
+    display: flex;
+    position: absolute;
+    top: 4.9em;
+    left: 5em;
+    color: brown;
+    font-family: "Planewalker";
+    font-size: 0.6em;
+    width: 80%;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
