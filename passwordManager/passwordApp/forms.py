@@ -8,3 +8,6 @@ class SignUpForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'JavascriptLover'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'monpassword'}))
+
+class CreateNewSafeBox(forms.Form):
+    name = forms.CharField(label='Nom du coffre', max_length=100)

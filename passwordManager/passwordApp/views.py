@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, CreateNewSafeBox
 from django.contrib.auth.hashers import make_password
+from .models import SafeBox, PassWordManagerDataModel
 
 def index(request):
     return render(request, 'index.html')
@@ -64,3 +66,36 @@ def signIn(request):
 def signOut(request):
     logout(request)
     return redirect('index')
+
+@login_required
+def myPasswordsManager(request):
+    if request.method == 'POST':
+        form = CreateNewSafeBox(request.POST)
+        if form.is_valid():
+            new_safebox = SafeBox(name=form.cleaned_data['name'], user=request.user)
+            new_safebox.save()
+            return redirect('myPasswordsManager')
+    else:
+        form = CreateNewSafeBox()
+
+    safeboxes = SafeBox.objects.filter(user=request.user)
+    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes})
+
+# @login_required
+# def addPasswordData(request, safebox_id):
+#     safebox = SafeBox.objects.get(id=safebox_id, user=request.user)
+
+#     if request.method == 'POST':
+#         form = AddPasswordDataForm(request.POST)
+#         if form.is_valid():
+#             password_data = PassWordManagerDataModel(
+#                 safebox=safebox
+#                 website=form.cleaned_data['website'],
+#                 password=form.cleaned_data['password'],
+#             )
+#             password_data.save()
+#             return redirect('myPasswordsManager')
+#     else:
+#         form = AddPasswordDataForm()
+
+#     return render(request, 'myPasswordManager.html', {'form': form})
