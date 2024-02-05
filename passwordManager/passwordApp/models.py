@@ -26,3 +26,6 @@ class PassWordManagerDataModel(models.Model):
 
     def check_password(self, raw_password):
         return bcrypt.checkpw(raw_password.encode('utf-8'), self.password.encode('utf-8'))
+    
+    def get_website_data(self):
+        return [self.websiteName, self.websiteUrl, self.password]
