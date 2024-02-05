@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import bcrypt
 
 # Create your models here.
@@ -35,3 +36,7 @@ class PassWordManagerDataModel(models.Model):
         self.websiteUrl = website_url
         hashed = bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt())
         self.password = hashed.decode('utf-8')
+class SafeBox(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    password_manager_data = models.ManyToManyField(PassWordManagerDataModel)
