@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'RingBearer';
+    src: url('./fonts/RingbearerMedium-51mgZ.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'PlaneWalker';
+    src: url('./fonts/Planewalker-38m6.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'NeuSharp';
+    src: url('./fonts/NeusharpBold-7B8RV.otf') format('truetype');
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("background_inside.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
