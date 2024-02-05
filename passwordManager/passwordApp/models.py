@@ -29,3 +29,9 @@ class PassWordManagerDataModel(models.Model):
     
     def get_website_data(self):
         return [self.websiteName, self.websiteUrl, self.password]
+    
+    def set_website_data(self, website_name, website_url, raw_password):
+        self.websiteName = website_name
+        self.websiteUrl = website_url
+        hashed = bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt())
+        self.password = hashed.decode('utf-8')
