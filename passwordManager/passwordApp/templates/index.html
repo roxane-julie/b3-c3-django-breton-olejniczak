@@ -23,7 +23,11 @@
                 <img class="svg-icon" src="../static/images/sort-horizontal-svgrepo-com.svg" alt="sort icon">
                 Organisez les sans limite</li>
         </ul>
+        {% if not user.is_authenticated %}
         <button class="subscribe-btn" onclick="location.href='signup/';">Commencer</button>
+        {% else %}
+        <button class="subscribe-btn" onclick="location.href='manager/';">Commencer</button>
+        {% endif %}
     </div>
 </body>
 </html>

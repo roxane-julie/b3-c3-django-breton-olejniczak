@@ -44,6 +44,10 @@
     border-radius: 20px;
     padding: 2em;
     max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .name-container{
@@ -125,7 +129,7 @@ width: 100%;
 }
 
 .add-safebox-button:hover {
-    font-size: 0.9em;
+    transform: scale(1.05);
     box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
 
 }
@@ -170,7 +174,7 @@ input.create-safebox-btn {
 }
 
 input.create-safebox-btn:hover {
-    font-size: 0.9em;
+    transform: scale(1.05);
     box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
 }
 
