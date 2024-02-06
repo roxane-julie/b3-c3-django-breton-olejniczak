@@ -46,3 +46,7 @@ li {
     margin-right: auto;
     width: 50px;
 }
+
+.active{
+    color: #E4782F;
+}

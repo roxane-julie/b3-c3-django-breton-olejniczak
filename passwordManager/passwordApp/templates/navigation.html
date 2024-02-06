@@ -9,16 +9,35 @@
         <ul>
             <li><img class="logo-nav" src="{% static 'images/logo.png' %}" alt="logo shield with gold key"></li>
             {% if not user.is_authenticated %}
-            <li><a href="{% url 'index' %}">Accueil</a></li>
-            <li><a href="{% url 'signUp' %}">S'inscrire</a></li>
-            <li><a href="{% url 'signIn' %}">Se connecter</a></li>
+            <li><a id="home-tab" href="{% url 'index' %}">Accueil</a></li>
+            <li><a {% if active_tab == 'signUp' %} class="active"{% endif %}id="signup-tab" href="{% url 'signUp' %}">S'inscrire</a></li>
+            <li><a {% if active_tab == 'signIn' %} class="active"{% endif %} href="{% url 'signIn' %}">S'inscrire</a></li>
             {% else %}
             <li>Bienvenue {{ user.username }}</li>
-            <li><a href="{% url 'index' %}">Accueil</a></li>
-            <li><a href="{% url 'myPasswordsManager' %}">Manager de mots de passe</a></li>
+            <li><a id="home-tab" href="{% url 'index' %}">Accueil</a></li>
+            <li><a {% if active_tab == 'manager' %} class="active"{% endif %} id="manager-tab" href="{% url 'myPasswordsManager' %}">Manager de mots de passe</a></li>
             <li><a href="{% url 'signOut' %}">Se déconnecter</a></li>
             {% endif %}
         </ul>
     </nav>
+    <script>
+//  var navLinks = document.querySelectorAll('nav ul li a');
+
+// navLinks.forEach(function(link) {
+//     link.addEventListener('click', function(event) {
+//         navLinks.forEach(function(link) {
+//             link.classList.remove('active');
+//         });
+
+//         event.target.classList.add('active');
+//         localStorage.setItem('activeTab', event.target.id);
+//     });
+// });
+
+// var activeTabId = localStorage.getItem('activeTab');
+// if (activeTabId) {
+//     document.getElementById(activeTabId).classList.add('active');
+// }
+    </script>
 </body>
 </html>

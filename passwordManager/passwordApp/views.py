@@ -42,7 +42,7 @@ def signUp(request):
     else:
         form = SignUpForm()
 
-    return render(request, 'signUp.html', {'form': form})
+    return render(request, 'signUp.html', {'form': form, 'active_tab': 'signUp'})
 
 def signIn(request):
     if request.method == 'POST':
@@ -65,7 +65,7 @@ def signIn(request):
     else:
         form = LoginForm()
 
-    return render(request, 'signIn.html', {'form': form})
+    return render(request, 'signIn.html', {'form': form, 'active_tab': 'signIn'})
 
 def signOut(request):
     logout(request)
@@ -98,7 +98,7 @@ def myPasswordsManager(request):
         form = CreateNewSafeBox()
 
     safeboxes = SafeBox.objects.filter(user=request.user)
-    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name})
+    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name, 'active_tab': 'manager'})
 
 @login_required
 def deleteSafebox(request, safebox_id):
