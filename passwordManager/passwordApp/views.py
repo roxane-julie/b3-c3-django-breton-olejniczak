@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from .forms import SignUpForm, LoginForm, CreateNewSafeBox
 from django.contrib.auth.hashers import make_password
 from .models import SafeBox, PassWordManagerDataModel
+from django.http import JsonResponse
 
 def index(request):
     return render(request, 'index.html')
@@ -74,12 +75,24 @@ def myPasswordsManager(request):
         if form.is_valid():
             new_safebox = SafeBox(name=form.cleaned_data['name'], user=request.user)
             new_safebox.save()
-            return redirect('myPasswordsManager')
+            data = {
+                'success': True,
+                'message': 'Le coffre-fort a été créé avec succès.',
+                'safebox': {
+                'id': new_safebox.id,
+                'name': new_safebox.name,
+            }
+         }
+            return JsonResponse(data)
+        else:
+            data = {'success': False, 'errors': form.errors}
+        return JsonResponse(data)
     else:
         form = CreateNewSafeBox()
 
     safeboxes = SafeBox.objects.filter(user=request.user)
     return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes})
+
 
 # @login_required
 # def addPasswordData(request, safebox_id):

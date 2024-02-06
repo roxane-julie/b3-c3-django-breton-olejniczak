@@ -44,17 +44,92 @@
         <!-- Ajoutez plus de cartes ici -->
     </div>
     <script>
+    var addButton = document.querySelector('.add-safebox-button');
+    var formContainer = document.querySelector('.create-safebox-form-container');
+    var createButton = document.querySelector('.create-safebox-btn');
+
         document.querySelector('.add-safebox-button').addEventListener('click', function() {
         document.getElementById('create-safebox-form-container').style.display = 'block';
-});
-function showSafebox(id) {
-    var safebox = document.getElementById('safebox-' + id);
-    if (safebox.style.display === 'none') {
-        safebox.style.display = 'block';
+        });
+
+        addButton.addEventListener('click', function() {
+        addButton.style.display = 'none';
+        });
+
+        createButton.addEventListener('click', function() {
+        addButton.style.display = 'flex';
+        });
+
+        function showSafebox(id) {
+         var safebox = document.getElementById('safebox-' + id);
+        if (safebox.style.display === 'none') {
+            safebox.style.display = 'block';
+        } else {
+            safebox.style.display = 'none';
+        }
+        }
+
+        //utilisation asynchrone du formulaire
+
+        document.getElementById('create-safebox-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var form = this;
+    var formData = new FormData(form);
+
+    var csrfToken = getCookie('csrftoken');
+
+    fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+            'X-CSRFToken': csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+
+        var newSafebox = document.createElement('div');
+        newSafebox.setAttribute('class', 'safebox');
+
+        var newSafeboxContainer = document.createElement('div');
+        newSafeboxContainer.setAttribute('class', 'name-container');
+
+        var newSafeboxName = document.createElement('h2');
+        newSafeboxName.setAttribute('class', 'safebox-name');
+        newSafeboxName.setAttribute('onclick', `showSafebox('${data.safebox.id}')`);
+        newSafeboxName.textContent = data.safebox.name;
+
+
+        newSafeboxContainer.appendChild(newSafeboxName);
+
+        newSafebox.appendChild(newSafeboxContainer);
+
+        var safeboxList = document.querySelector('.safebox-list');
+        safeboxList.appendChild(newSafebox);
     } else {
-        safebox.style.display = 'none';
+        console.error('Erreur lors de la création du coffre fort');
     }
+    })
+    .catch(error => console.error('Erreur:', error));
+});
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
+
     </script>
 </body>
 </html>
