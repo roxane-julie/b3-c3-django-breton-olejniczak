@@ -20,6 +20,9 @@ def signIn(request):
 def myPasswordsManager(request):
     return render(request, 'myPasswordsManager.html')
 
+def safeBoxContainer(request):
+    return render(request, 'safeBoxContainer.html')
+
 def signUp(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)

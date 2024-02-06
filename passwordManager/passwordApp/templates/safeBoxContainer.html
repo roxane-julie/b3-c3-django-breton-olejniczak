@@ -9,7 +9,12 @@
 </head>
 <body>
     <div class="safe-box-cards-container">
-        <h3>Mots de passe dans {{ name }}</h3>
+        <h3>Mots de passe dans <span id="safebox-name"></span></h3>
     </div>
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var name = urlParams.get('name');
+        document.getElementById('safebox-name').textContent = name;
+    </script>
 </body>
 </html>

@@ -13,13 +13,12 @@
             <div class="safebox-list">
                 {% if safeboxes %}
                 {% for safebox in safeboxes %}
-                    <div class="safebox">
-                        <div class="name-container">
-                            <h2 class="safebox-name" onclick="showSafebox('{{ safebox.id }}')">{{ safebox.name }}</h2>
+                <div id="safebox-{{ safebox.id }}" class="safebox">
+                    <div class="name-container">
+                        <h2 class="safebox-name" onclick="showSafebox('{{ safebox.id }}')">{{ safebox.name }}</h2>
+                    </div>
+                        <div id="safebox-{{ safebox.id }}" class="safebox" style="display: none;" onclick="window.location.href='myPasswordsManager.html'">
                         </div>
-                            <div id="safebox-{{ safebox.id }}" class="safebox" style="display: none;">
-                                {% include 'safeBoxContainer.html' with name=safebox.name %}
-                            </div>
                         </div>
                 {% endfor %}
             {% else %}
@@ -61,14 +60,21 @@
         });
 
         function showSafebox(id) {
-         var safebox = document.getElementById('safebox-' + id);
-        if (safebox.style.display === 'none') {
-            safebox.style.display = 'block';
-        } else {
-            safebox.style.display = 'none';
-        }
-        }
+    var safebox = document.getElementById('safebox-' + id);
+    if (safebox.style.display === 'none') {
+        safebox.style.display = 'block';
+    } else {
+        safebox.style.display = 'none';
+    }
 
+    // Récupère le nom du coffre
+    var safeboxNameElement = safebox.querySelector('.safebox-name');
+    var safeboxName = safeboxNameElement.textContent || safeboxNameElement.innerText;
+    console.log(safeboxName);
+
+    // Redirige vers safeBoxContainer.html avec le nom en paramètre
+    window.location.href = 'safeBoxContainer/?name=' + encodeURIComponent(safeboxName);
+}
         //utilisation asynchrone du formulaire
 
         document.getElementById('create-safebox-form').addEventListener('submit', function(event) {
