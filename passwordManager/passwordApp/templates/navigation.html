@@ -2,11 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'navigation.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/navigation.css' %}">
 </head>
 <body>
     <nav>
         <ul>
+            <li><img class="logo-nav" src="{% static 'images/logo.png' %}" alt="logo shield with gold key"></li>
             {% if not user.is_authenticated %}
             <li><a href="{% url 'index' %}">Accueil</a></li>
             <li><a href="{% url 'signUp' %}">S'inscrire</a></li>

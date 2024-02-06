@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/mySafeBoxes.css' %}">
+</head>
+<body>
+    <div class="safebox-main-container">
+        <div class="title-container">
+            <img class="title-img" src="{% static 'images/golden_chest.png' %}" alt="chest">
+            <h2 class="card-title">Me<span class="letter-height">S</span> co<span class="letter-height">FF</span>re<span class="letter-height">S</span>-<span class="letter-height">F</span>ort<span class="letter-height">S</span></h2>
+        </div>
+            <div class="safebox-list">
+                {% if safeboxes %}
+                {% for safebox in safeboxes %}
+                    <div class="safebox">
+                        <div class="name-container">
+                            <h2 class="safebox-name" onclick="showSafebox('{{ safebox.id }}')">{{ safebox.name }}</h2>
+                        </div>
+                            <div id="safebox-{{ safebox.id }}" class="safebox" style="display: none;">
+                                {% include 'safeBoxContainer.html' with name=safebox.name %}
+                            </div>
+                        </div>
+                {% endfor %}
+            {% else %}
+                <p>Aucun coffre fort existant</p>
+            {% endif %}
+            </div>
+
+            <div class="create-safebox-form-container" id="create-safebox-form-container" style="display: none;" >
+                <form id="create-safebox-form" method="post">
+                    {% csrf_token %}
+                    {{ form.name.label_tag }}
+                    <div class="input-container">
+                        {{ form.name }}
+                    </div>
+                    <input class="create-safebox-btn" type="submit" value="Créer un coffre">
+                </form>
+            </div>
+            <button class="add-safebox-button">
+                <img class="input-icon" src="{% static 'images/plus-solid.svg' %}" alt="add icon">
+            </button>
+        </div>
+        <!-- Ajoutez plus de cartes ici -->
+    </div>
+    <script>
+        document.querySelector('.add-safebox-button').addEventListener('click', function() {
+        document.getElementById('create-safebox-form-container').style.display = 'block';
+});
+function showSafebox(id) {
+    var safebox = document.getElementById('safebox-' + id);
+    if (safebox.style.display === 'none') {
+        safebox.style.display = 'block';
+    } else {
+        safebox.style.display = 'none';
+    }
+}
+    </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'NeuSharp';
-    src: url('./fonts/NeusharpBold-7B8RV.otf') format('truetype');
+    src: url('../fonts/NeusharpBold-7B8RV.otf') format('truetype');
 }
 
 nav {
@@ -38,4 +38,11 @@ ul a:hover {
 }
 li {
     color: bisque!important;
+}
+
+.logo-nav{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50px;
 }

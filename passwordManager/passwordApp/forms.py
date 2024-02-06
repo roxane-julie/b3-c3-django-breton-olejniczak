@@ -10,4 +10,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'monpassword'}))
 
 class CreateNewSafeBox(forms.Form):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(CreateNewSafeBox, self).__init__(*args, **kwargs)
     name = forms.CharField(label='Nom du coffre', max_length=100)
