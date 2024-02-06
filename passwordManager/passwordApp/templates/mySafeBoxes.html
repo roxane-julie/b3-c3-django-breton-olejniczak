@@ -19,7 +19,8 @@
                     </div>
                         <div id="safebox-{{ safebox.id }}" class="safebox" style="display: none;" onclick="window.location.href='myPasswordsManager.html'">
                         </div>
-                        </div>
+                        <button onclick="deleteSafebox('{{ safebox.id }}')">SUPPR</button>
+                </div>
                 {% endfor %}
             {% else %}
                 <p>Aucun coffre fort existant</p>
@@ -115,6 +116,35 @@
     })
     .catch(error => console.error('Erreur:', error));
 });
+
+function deleteSafebox(id) {
+    var csrfToken = getCookie('csrftoken');
+
+    fetch('deleteSafebox/' + id + '/', {
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': csrfToken
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur lors de la suppression du coffre-fort');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Supprime l'élément du DOM
+            var safebox = document.getElementById('safebox-' + id);
+            safebox.parentNode.removeChild(safebox);
+        } else {
+            console.error('Erreur:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+    });
+}
 
 function getCookie(name) {
     var cookieValue = null;

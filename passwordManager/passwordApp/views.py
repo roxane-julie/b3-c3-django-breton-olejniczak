@@ -100,7 +100,20 @@ def myPasswordsManager(request):
     safeboxes = SafeBox.objects.filter(user=request.user)
     return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name})
 
+@login_required
+def deleteSafebox(request, safebox_id):
+    print('Cest la fonction delete')
+    print(f"deleteSafebox called with method {request.method} and safebox_id {safebox_id}")
+    if request.method == 'DELETE':
+        try:
+            safebox = SafeBox.objects.get(id=safebox_id, user=request.user)
+        except SafeBox.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Coffre-fort non trouvé.'})
 
+        safebox.delete()
+        return JsonResponse({'success': True, 'message': 'Coffre-fort supprimé avec succès.'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 # @login_required
 # def addPasswordData(request, safebox_id):
 #     safebox = SafeBox.objects.get(id=safebox_id, user=request.user)
