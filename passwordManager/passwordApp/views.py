@@ -98,7 +98,9 @@ def myPasswordsManager(request):
         form = CreateNewSafeBox()
 
     safeboxes = SafeBox.objects.filter(user=request.user)
-    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name, 'active_tab': 'manager'})
+    safebox_count = SafeBox.objects.count()
+
+    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name, 'active_tab': 'manager', 'safebox_count': safebox_count})
 
 @login_required
 def deleteSafebox(request, safebox_id):

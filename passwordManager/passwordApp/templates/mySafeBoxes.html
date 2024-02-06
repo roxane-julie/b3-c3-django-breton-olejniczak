@@ -26,7 +26,7 @@
                 </div>
                 {% endfor %}
             {% else %}
-                <p style="text-align: center;">Aucun coffre fort existant</p>
+                <p class="no-safebox-message" style="text-align: center;">Aucun coffre fort existant</p>
             {% endif %}
             </div>
 
@@ -118,6 +118,11 @@
     }
     })
     .catch(error => console.error('Erreur:', error));
+});
+
+document.querySelector('.create-safebox-btn').addEventListener('click', function() {
+    document.getElementById('create-safebox-form').style.display = 'none';
+    document.querySelector('.no-safebox-message').style.display = 'none';
 });
 
 function deleteSafebox(id) {
