@@ -13,8 +13,13 @@
     src: url('../fonts/NeusharpBold-7B8RV.otf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Aniron';
+    src: url('../fonts/anirm___.ttf') format('truetype');
+}
+
 .card-title{
-    font-family: "RingBearer";
+    font-family: "Aniron";
     color: bisque;
     margin-top: 0;
 }

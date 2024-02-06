@@ -14,3 +14,9 @@ class CreateNewSafeBox(forms.Form):
         kwargs.setdefault('label_suffix', '')
         super(CreateNewSafeBox, self).__init__(*args, **kwargs)
     name = forms.CharField(label='Nom du coffre', max_length=100)
+
+#Créer Ici un formulaire CreateNewCard en utilisant les champs définis dans le modèle PasswordManagerDataModel
+    #AIDE
+    # websiteName = models.CharField(max_length=100)
+    # websiteUrl = models.URLField(blank=True, default='')
+    # password = models.CharField(max_length=100)

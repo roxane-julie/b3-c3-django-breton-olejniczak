@@ -4,19 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'styles/manager.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/safeBoxContainer.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
     <title>ShallNotPass</title>
 </head>
 <body>
     {% include 'navigation.html' %}
     <div class="safe-box-cards-container">
-        <h3>Mots de passe dans <span id="safebox-name"></span></h3>
+        <img class="passwords-title-img" src="{% static 'images/mage.png' %}" alt="mage">
+        <div class="title-container">
+            Mots de passe stockés dans le coffre <br><span id="safebox-name"></span>
+        </div>
+        <div class="password-data-list">
+            {% if passwordDatas %}
+            {% for passwordData in passwordDatas %}
+            <div id="dataCard-{{ passwordData.id }}" class="dataCard">
+                <h2>Afficher ici la liste des Cartes contenant chacune un nom de site, son url et un password associé</h2>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Aucun mot-de-passe enregistré</p>
+        {% endif %}
+        </div>
     </div>
+    <button class="goback-btn" onclick="goBack()"><img class="goback-icon" src="{% static 'images/arrow-left-solid.svg' %}" alt="arrow-left">Revenir à la galerie des coffres</button>
     <script>
         var urlParams = new URLSearchParams(window.location.search);
         var name = urlParams.get('name');
         document.getElementById('safebox-name').textContent = name;
+
+        function goBack() {
+    window.history.back();
+}
     </script>
 </body>
 </html>

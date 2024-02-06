@@ -21,7 +21,7 @@ def myPasswordsManager(request):
     return render(request, 'myPasswordsManager.html')
 
 def safeBoxContainer(request):
-    return render(request, 'safeBoxContainer.html')
+    return render(request, 'safeBoxContainer.html', {'active_tab': 'manager'})
 
 def signUp(request):
     if request.method == 'POST':
@@ -114,21 +114,10 @@ def deleteSafebox(request, safebox_id):
         return JsonResponse({'success': True, 'message': 'Coffre-fort supprimé avec succès.'})
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method.'})
-# @login_required
-# def addPasswordData(request, safebox_id):
-#     safebox = SafeBox.objects.get(id=safebox_id, user=request.user)
 
-#     if request.method == 'POST':
-#         form = AddPasswordDataForm(request.POST)
-#         if form.is_valid():
-#             password_data = PassWordManagerDataModel(
-#                 safebox=safebox
-#                 website=form.cleaned_data['website'],
-#                 password=form.cleaned_data['password'],
-#             )
-#             password_data.save()
-#             return redirect('myPasswordsManager')
-#     else:
-#         form = AddPasswordDataForm()
+@login_required    
+def createNewCard(request):
+# Définir ici la logique du formulaire pour créer une nouvelle instance de PassWordManagerDataModel
 
-#     return render(request, 'myPasswordManager.html', {'form': form})
+    passwordDatas = PassWordManagerDataModel.objects.filter(user=request.user)
+    return render(request, 'myPasswordsManager.html', {'form': form, 'passwordDatas': passwordDatas, 'name': name, 'active_tab': 'manager'})

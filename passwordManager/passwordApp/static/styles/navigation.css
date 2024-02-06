@@ -3,6 +3,11 @@
     src: url('../fonts/NeusharpBold-7B8RV.otf') format('truetype');
 }
 
+@font-face {
+    font-family: 'RingBearer';
+    src: url('../fonts/RingbearerMedium-51mgZ.ttf') format('truetype');
+}
+
 nav {
     position: fixed;
     top: 0;
@@ -40,9 +45,17 @@ li {
     color: bisque!important;
 }
 
+.title{
+font-family: 'Ringbearer';
+font-size: 1.3em;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
 .logo-nav{
     display: block;
-    margin-left: auto;
+    margin-left: 1em;
     margin-right: auto;
     width: 50px;
 }

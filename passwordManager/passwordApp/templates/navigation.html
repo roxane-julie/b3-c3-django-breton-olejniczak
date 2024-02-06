@@ -7,11 +7,11 @@
 <body>
     <nav>
         <ul>
-            <li><img class="logo-nav" src="{% static 'images/logo.png' %}" alt="logo shield with gold key"></li>
+            <li class="title">ShallNotPass<img class="logo-nav" src="{% static 'images/logo.png' %}" alt="logo shield with gold key"></li>
             {% if not user.is_authenticated %}
             <li><a id="home-tab" href="{% url 'index' %}">Accueil</a></li>
             <li><a {% if active_tab == 'signUp' %} class="active"{% endif %}id="signup-tab" href="{% url 'signUp' %}">S'inscrire</a></li>
-            <li><a {% if active_tab == 'signIn' %} class="active"{% endif %} href="{% url 'signIn' %}">S'inscrire</a></li>
+            <li><a {% if active_tab == 'signIn' %} class="active"{% endif %} href="{% url 'signIn' %}">Se connecter</a></li>
             {% else %}
             <li>Bienvenue {{ user.username }}</li>
             <li><a id="home-tab" href="{% url 'index' %}">Accueil</a></li>
