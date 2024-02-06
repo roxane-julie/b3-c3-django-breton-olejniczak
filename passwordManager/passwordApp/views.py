@@ -73,6 +73,10 @@ def signOut(request):
 
 @login_required
 def myPasswordsManager(request):
+    print(request)
+    name = request.GET.get('name', None)
+    print(name)
+
     if request.method == 'POST':
         form = CreateNewSafeBox(request.POST)
         if form.is_valid():
@@ -94,7 +98,7 @@ def myPasswordsManager(request):
         form = CreateNewSafeBox()
 
     safeboxes = SafeBox.objects.filter(user=request.user)
-    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes})
+    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name})
 
 
 # @login_required

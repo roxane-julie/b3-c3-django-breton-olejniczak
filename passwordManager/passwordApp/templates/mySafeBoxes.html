@@ -61,17 +61,12 @@
 
         function showSafebox(id) {
     var safebox = document.getElementById('safebox-' + id);
-    if (safebox.style.display === 'none') {
-        safebox.style.display = 'block';
-    } else {
-        safebox.style.display = 'none';
-    }
-
     // Récupère le nom du coffre
     var safeboxNameElement = safebox.querySelector('.safebox-name');
     var safeboxName = safeboxNameElement.textContent || safeboxNameElement.innerText;
-    console.log(safeboxName);
 
+    fetch('?name=' + encodeURIComponent(safeboxName))
+    .catch(error => console.error('Error:', error));
     // Redirige vers safeBoxContainer.html avec le nom en paramètre
     window.location.href = 'safeBoxContainer/?name=' + encodeURIComponent(safeboxName);
 }
