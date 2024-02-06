@@ -35,6 +35,12 @@
     align-items: center;
 }
 
+p{
+    font-family: 'Neusharp';
+    margin: 0 auto;
+    color: bisque;
+}
+
 
 .letter-height{
     position: relative;
