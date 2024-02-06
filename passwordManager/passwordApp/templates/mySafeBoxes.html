@@ -17,7 +17,7 @@
                 <div id="safebox-{{ safebox.id }}" class="safebox">
                     <div class="name-container">
                         <h2 class="safebox-name" onclick="showSafebox('{{ safebox.id }}')">{{ safebox.name }}</h2>
-                        <button class="safebox-button minus-btn" onclick="deleteSafebox('{{ safebox.id }}')">
+                        <button class="minus-btn" onclick="deleteSafebox('{{ safebox.id }}')">
                             <img class="input-icon minus-icon" src="{% static 'images/minus-solid.svg' %}" alt="add icon">
                         </button>
                     </div>
@@ -40,7 +40,7 @@
                     <input class="create-safebox-btn" type="submit" value="Créer un coffre">
                 </form>
             </div>
-            <button class="safebox-button">
+            <button class="add-safebox-button">
                 <img class="input-icon" src="{% static 'images/plus-solid.svg' %}" alt="add icon">
             </button>
         </div>
