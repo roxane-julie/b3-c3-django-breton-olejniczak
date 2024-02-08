@@ -52,13 +52,17 @@
     var createButton = document.querySelector('.create-safebox-btn');
 
         addButton.addEventListener('click', function() {
-            formContainer.style.display = 'block';
-            addButton.style.display = 'none';
+        addButton.style.display = 'none';
+        console.log("Le bouton disparait")
+        formContainer.style.display = 'flex';
         });
 
         createButton.addEventListener('click', function() {
-        formContainer.style.display = 'none';
         addButton.style.display = 'flex';
+        console.log("Le bouton apparait");
+        if (formContainer.style.display !== 'flex') {
+        formContainer.style.display = 'none';
+    }
         });
 
     function showSafebox(id) {
@@ -75,9 +79,8 @@
     // // Redirige vers safeBoxContainer.html avec le nom en paramètre
     window.location.href = 'safeBoxContainer/?name=' + encodeURIComponent(safeboxName);
 }
-        //utilisation asynchrone du formulaire
 
-        document.getElementById('create-safebox-form').addEventListener('submit', function(event) {
+    document.getElementById('create-safebox-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     var form = this;
@@ -134,7 +137,7 @@
 });
 
 document.querySelector('.create-safebox-btn').addEventListener('click', function() {
-    document.getElementById('create-safebox-form').style.display = 'none';
+    document.getElementById('create-safebox-form-container').style.display = 'none';
     document.querySelector('.no-safebox-message').style.display = 'none';
 });
 
