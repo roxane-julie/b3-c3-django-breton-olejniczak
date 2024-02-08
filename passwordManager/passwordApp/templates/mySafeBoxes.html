@@ -51,27 +51,28 @@
     var formContainer = document.querySelector('.create-safebox-form-container');
     var createButton = document.querySelector('.create-safebox-btn');
 
-        document.querySelector('.add-safebox-button').addEventListener('click', function() {
-        document.getElementById('create-safebox-form-container').style.display = 'block';
-        });
-
         addButton.addEventListener('click', function() {
-        addButton.style.display = 'none';
+            formContainer.style.display = 'block';
+            addButton.style.display = 'none';
         });
 
         createButton.addEventListener('click', function() {
+        formContainer.style.display = 'none';
         addButton.style.display = 'flex';
         });
 
-        function showSafebox(id) {
-    var safebox = document.getElementById('safebox-' + id);
-    // Récupère le nom du coffre
-    var safeboxNameElement = safebox.querySelector('.safebox-name');
-    var safeboxName = safeboxNameElement.textContent || safeboxNameElement.innerText;
+    function showSafebox(id) {
+        var safebox = document.getElementById('safebox-' + id);
+        console.log(safebox);
+    // // Récupère le nom du coffre
+        var safeboxNameElement = safebox.querySelector('.safebox-name');
+        console.log(safeboxNameElement);
+        var safeboxName = safeboxNameElement.textContent || safeboxNameElement.innerText;
+        console.log(safeboxName);
 
     fetch('?name=' + encodeURIComponent(safeboxName))
     .catch(error => console.error('Error:', error));
-    // Redirige vers safeBoxContainer.html avec le nom en paramètre
+    // // Redirige vers safeBoxContainer.html avec le nom en paramètre
     window.location.href = 'safeBoxContainer/?name=' + encodeURIComponent(safeboxName);
 }
         //utilisation asynchrone du formulaire
@@ -96,7 +97,7 @@
         if (data.success) {
 
         var newSafebox = document.createElement('div');
-        newSafebox.setAttribute('class', 'safebox');
+        newSafebox.setAttribute('id', `safebox-${(data.safebox.id)}`);
 
         var newSafeboxContainer = document.createElement('div');
         newSafeboxContainer.setAttribute('class', 'name-container');
@@ -106,8 +107,20 @@
         newSafeboxName.setAttribute('onclick', `showSafebox('${data.safebox.id}')`);
         newSafeboxName.textContent = data.safebox.name;
 
-
         newSafeboxContainer.appendChild(newSafeboxName);
+
+        var newMinusButton = document.createElement('button');
+        newMinusButton.setAttribute('class', 'minus-btn');
+        newMinusButton.setAttribute('onclick', `deleteSafebox('${data.safebox.id}')`);
+
+        var newMinusIcon = document.createElement('img');
+        newMinusIcon.setAttribute('class', 'input-icon minus-icon');
+        newMinusIcon.setAttribute('src', "{% static 'images/minus-solid.svg' %}");
+        newMinusIcon.setAttribute('alt', 'add icon');
+
+        newMinusButton.appendChild(newMinusIcon);
+
+        newSafeboxContainer.appendChild(newMinusButton);
 
         newSafebox.appendChild(newSafeboxContainer);
 
