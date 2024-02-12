@@ -1,4 +1,5 @@
 from django import forms
+from .models import PassWordManagerDataModel
 
 class SignUpForm(forms.Form):
     username = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'JavascriptLover'}))
@@ -15,6 +16,12 @@ class CreateNewSafeBox(forms.Form):
         super(CreateNewSafeBox, self).__init__(*args, **kwargs)
     name = forms.CharField(label='Nom du coffre', max_length=100)
 
+class CreateNewCard(forms.ModelForm) :
+    class Meta: 
+        model = PassWordManagerDataModel
+        fields = ['websiteName', 'websiteUrl', 'password']
+
+        
 #Créer Ici un formulaire CreateNewCard en utilisant les champs définis dans le modèle PasswordManagerDataModel
     #AIDE
     # websiteName = models.CharField(max_length=100)
