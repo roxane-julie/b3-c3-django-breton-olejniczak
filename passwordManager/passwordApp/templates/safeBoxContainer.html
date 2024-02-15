@@ -19,7 +19,7 @@
             {% if passwordDatas %}
             {% for passwordData in passwordDatas %}
             <div id="dataCard-{{ passwordData.id }}" class="dataCard">
-                <h2>Afficher ici la liste des Cartes contenant chacune un nom de site, son url et un password associé</h2>
+                <h2>{{passwordData.websiteName}}</h2>
             </div>
             {% endfor %}
         {% else %}

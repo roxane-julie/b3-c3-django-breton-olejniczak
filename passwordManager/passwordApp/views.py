@@ -117,6 +117,10 @@ def deleteSafebox(request, safebox_id):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+def safeBoxContainer(request):
+    passwordDatas = PassWordManagerDataModel.objects.all()
+    return render(request, 'safeBoxContainer.html', {'passwordDatas': passwordDatas})
+
 @login_required    
 def createNewCard(request):
     if request.method == 'POST':
