@@ -25,6 +25,23 @@
         {% else %}
             <p>Aucun mot-de-passe enregistré</p>
         {% endif %}
+        <button class="goback-btn" onclick="showCreateNewCardForm()">Ajouter un mot de passe</button>
+        <div id="createNewCardForm-container" style="display: none;">
+            <form id="createNewCardForm" method="POST" action="{% url 'createNewCard' %}">
+                {% csrf_token %}
+                <label for="websiteName">Nom du site :</label>
+                <input type="text" id="websiteName" name="websiteName" required>
+        
+                <label for="websiteUrl">URL du site :</label>
+                <input type="url" id="websiteUrl" name="websiteUrl">
+        
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password" required>
+        
+                <button type="submit">Créer</button>
+            </form>
+        </div>
+        <div id="success" style="display: none;">Carte ajoutée avec succès</div>
         </div>
     </div>
     <button class="goback-btn" onclick="goBack()"><img class="goback-icon" src="{% static 'images/arrow-left-solid.svg' %}" alt="arrow-left">Revenir à la galerie des coffres</button>
@@ -35,7 +52,60 @@
 
         function goBack() {
     window.history.back();
+    }
+
+    function showCreateNewCardForm() {
+        var form = document.getElementById('createNewCardForm-container');
+        form.style.display = 'block';
+    }
+
+    function submitForm(event) {
+    event.preventDefault();
+
+    var form = this;
+    var formData = new FormData(form);
+
+    var csrfToken = getCookie('csrftoken');
+
+    fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+            'X-CSRFToken': csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Cacher le formulaire
+            form.style.display = 'none';
+
+            // Afficher la div de succès
+            var successDiv = document.getElementById('success');
+            successDiv.style.display = 'block';
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+document.getElementById('createNewCardForm').addEventListener('submit', submitForm);
     </script>
 </body>
 </html>

@@ -16,12 +16,15 @@ class CreateNewSafeBox(forms.Form):
         super(CreateNewSafeBox, self).__init__(*args, **kwargs)
     name = forms.CharField(label='Nom du coffre', max_length=100)
 
-class CreateNewCard(forms.ModelForm) :
-    class Meta: 
-        model = PassWordManagerDataModel
-        fields = ['websiteName', 'websiteUrl', 'password']
+# class CreateNewCard(forms.ModelForm) :
+#     class Meta: 
+#         model = PassWordManagerDataModel
+#         fields = ['websiteName', 'websiteUrl', 'password']
 
-        
+class CreateNewCard(forms.Form):
+    websiteName = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'mysite'}))
+    websiteUrl = forms.URLField(required=False, widget=forms.URLInput(attrs={'placeholder': 'http://mysite.fr'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'monpassword'}))
 #Créer Ici un formulaire CreateNewCard en utilisant les champs définis dans le modèle PasswordManagerDataModel
     #AIDE
     # websiteName = models.CharField(max_length=100)

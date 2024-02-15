@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from .forms import SignUpForm, LoginForm, CreateNewSafeBox
+from .forms import SignUpForm, LoginForm, CreateNewSafeBox, CreateNewCard
 from django.contrib.auth.hashers import make_password
 from .models import SafeBox, PassWordManagerDataModel
 from django.http import JsonResponse
@@ -119,7 +119,50 @@ def deleteSafebox(request, safebox_id):
 
 @login_required    
 def createNewCard(request):
-# Définir ici la logique du formulaire pour créer une nouvelle instance de PassWordManagerDataModel
+    if request.method == 'POST':
+        form = CreateNewCard(request.POST)
+        if form.is_valid():
+            websiteName = form.cleaned_data['websiteName']
+            websiteUrl = form.cleaned_data['websiteUrl']
+            password = form.cleaned_data['password']
+            user = request.user
 
-    passwordDatas = PassWordManagerDataModel.objects.filter(user=request.user)
-    return render(request, 'myPasswordsManager.html', {'form': form, 'passwordDatas': passwordDatas, 'name': name, 'active_tab': 'manager'})
+            hashed_password = make_password(password)
+
+            try:
+                new_passwordData = PassWordManagerDataModel.objects.create(
+                    websiteName=websiteName, websiteUrl=websiteUrl, password=hashed_password,
+                    user=user)
+                data = {
+                    'success': True,
+                    'message': "La carte d'informations de votre mot de passe a été créée avec succès",
+                    'passwordData': {
+                        'id': new_passwordData.id,
+                        'websiteName': new_passwordData.websiteName,
+                        'websiteUrl': new_passwordData.websiteUrl,
+                        'password': new_passwordData.password
+                    }
+                }
+                return JsonResponse(data)
+            except Exception as e:
+                # Gérer l'erreur ici
+                print(f"Erreur lors de la création de la nouvelle carte : {e}")
+                data = {
+                    'success': False,
+                    'message': f"Erreur lors de la création de la nouvelle carte : {e}",
+                }
+                return JsonResponse(data, status=500)
+        else:
+            # Le formulaire n'est pas valide
+            data = {
+                'success': False,
+                'message': "Le formulaire n'est pas valide",
+            }
+            return JsonResponse(data, status=400)
+    else:
+        # La requête n'est pas une requête POST
+        data = {
+            'success': False,
+            'message': "La requête n'est pas une requête POST",
+        }
+        return JsonResponse(data)

@@ -7,12 +7,7 @@ class PassWordManagerDataModel(models.Model):
     websiteName = models.CharField(max_length=100)
     websiteUrl = models.URLField(blank=True, default='')
     password = models.CharField(max_length=100)
-
-    def get_username(self):
-        return self.userName
-
-    def set_username(self, username):
-        self.userName = username
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def get_website_name(self):
         return self.websiteName
@@ -35,6 +30,7 @@ class PassWordManagerDataModel(models.Model):
         self.websiteUrl = website_url
         hashed = bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt())
         self.password = hashed.decode('utf-8')
+
 class SafeBox(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
