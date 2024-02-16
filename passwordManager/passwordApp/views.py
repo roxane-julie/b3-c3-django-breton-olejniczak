@@ -7,6 +7,7 @@ from .forms import SignUpForm, LoginForm, CreateNewSafeBox, CreateNewCard
 from django.contrib.auth.hashers import make_password
 from .models import SafeBox, PassWordManagerDataModel
 from django.http import JsonResponse
+from django.forms.models import model_to_dict
 
 def index(request):
     return render(request, 'index.html')
@@ -118,16 +119,35 @@ def deleteSafebox(request, safebox_id):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+
+
 def safeBoxContainer(request):
     safebox_id = request.GET.get('id')
 
     safebox = get_object_or_404(SafeBox, id=safebox_id)
 
-    password_data = safebox.password_data.all().values('websiteName', 'websiteUrl', 'password')
+    safebox_dict = model_to_dict(safebox)
+
+    password_data = safebox.password_data.all().values('id','websiteName', 'websiteUrl', 'password')
     print(f"SAFEBOX DEBUG", list(password_data))
     print(f"SAFEBOX", safebox.name)
 
-    return render(request, 'safeBoxContainer.html', {'passwordDatas': list(password_data), 'safebox': safebox, 'safebox_name': safebox.name})
+    return render(request, 'safeBoxContainer.html', {'passwordDatas': list(password_data), 'safebox': safebox_dict, 'safebox_name': safebox.name})
+
+def getPasswordData(request, password_data_id):
+    print('JE SUIS GETPASSWORD')
+    if request.method == 'GET':
+        password_data = get_object_or_404(PassWordManagerDataModel, id=password_data_id)
+        password_data_dict = {
+            'id': password_data.id,
+            'websiteName': password_data.websiteName,
+            'websiteUrl': password_data.websiteUrl,
+            'password': password_data.password,
+            'safebox': password_data.safebox.id
+        }
+        return JsonResponse({'passwordDatas': password_data_dict})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 @login_required    
 def createNewCard(request):

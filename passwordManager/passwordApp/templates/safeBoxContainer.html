@@ -18,7 +18,7 @@
         <div class="password-data-list">
             {% if passwordDatas %}
             {% for passwordData in passwordDatas %}
-            <div id="dataCard-{{ passwordData.id }}" class="dataCard-name-container">
+            <div id="dataCard-{{ passwordData.id }}" class="dataCard-name-container" data-id="{{ passwordData.id }}" onclick="showCardInformations(this)">
                     <h2 class="dataCard-name">{{passwordData.websiteName}}</h2>
             </div>
             {% endfor %}
@@ -30,15 +30,19 @@
         <div id="createNewCardForm-container" style="display: none;">
             <form id="createNewCardForm" method="POST" action="{% url 'createNewCard' %}">
                 {% csrf_token %}
-                <label for="websiteName">Nom du site :</label>
-                <input type="text" id="websiteName" name="websiteName" class="input-card"
-                required>
-        
-                <label for="websiteUrl">URL du site :</label>
-                <input type="url" id="websiteUrl" name="websiteUrl" class="input-card">
-        
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" class="input-card" required>
+                <div class="input-group">
+                    <label for="websiteName">Nom du site :</label>
+                    <input type="text" id="websiteName" name="websiteName" class="input-card"
+                    required>
+                </div>
+                <div class="input-group">
+                    <label for="websiteUrl">URL du site :</label>
+                    <input type="url" id="websiteUrl" name="websiteUrl" class="input-card">
+                </div>
+                <div class="input-group">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password" class="input-card" required>
+                </div>
                 <input type="hidden" name="id" value="{{ safebox.id }}">
                 <button type="submit" class="add-card-form-button"">Créer</button>
             </form>
@@ -55,41 +59,69 @@
     window.history.back();
     }
 
-    // window.onload = function() {
-    //     var urlParams = new URLSearchParams(window.location.search);
-    //     var safeboxId = urlParams.get('id');
-
-    //     fetch('/get_password_data/?id=' + safeboxId)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log(data);
-    //             var passwordDataContainer = document.querySelector('.password-data-list');
-    //             data.forEach(passwordData => {
-    //                 var dataCard = document.createElement('div');
-    //                 dataCard.id = 'dataCard-' + passwordData.id;
-    //                 dataCard.className = 'dataCard-name-container';
-
-    //                 var dataCardName = document.createElement('h2');
-    //                 dataCardName.className = 'dataCard-name';
-    //                 dataCardName.textContent = passwordData.websiteName;
-
-    //                 dataCard.appendChild(dataCardName);
-    //                 passwordDataContainer.appendChild(dataCard);
-    //             });
-    //         });
-    // }
-
     function showCreateNewCardForm() {
         var form = document.getElementById('createNewCardForm-container');
         form.style.display = 'block';
 
         var button = document.querySelector('.add-card-btn');
-    button.style.display = 'none';
+        button.style.display = 'none';
 
-    var passwordList = document.querySelector('.password-data-list');
-    passwordList.style.display = 'none';
+        var passwordList = document.querySelector('.password-data-list');
+        passwordList.style.display = 'none';
+
+        var titleContainer = document.querySelector('.title-container');
+        titleContainer.style.display = 'none';
     }
 
+    window.onload = function() {
+        var form = document.getElementById('createNewCardForm-container');
+        form.addEventListener('submit', function() {
+            var titleContainer = document.querySelector('.title-container');
+            titleContainer.style.display = 'block';
+        });
+    };
+
+    function showCardInformations(id) {
+    var idValue = id.dataset.id
+    // var urlParams = new URLSearchParams(window.location.search);
+    // var safeBoxContainerId = urlParams.get('id');
+    // var idToUrl = `?id=${safeBoxContainerId}/`;
+    // console.log(idToUrl);
+    var csrfToken = getCookie('csrftoken');
+
+    fetch('getPasswordData/' + idValue + '/', {
+        method: 'GET',
+        headers: {
+            'X-CSRFToken': csrfToken
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des informations du mot de passe');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Appeler une fonction pour afficher les informations du mot de passe
+        displayPasswordData(data.passwordDatas);
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+    });
+}
+
+//     function showCardInformations(passwordData) {
+//     var container = document.querySelector('.dataCard-main-container');
+//     console.log(passwordData.dataset.infos);
+//     var websiteName = passwordData.dataset.websiteName;
+//     var websiteUrl = passwordData.dataset.websiteUrl;
+//     var password = passwordData.dataset.password;
+
+//     Utilisez les données du mot de passe comme vous le souhaitez, par exemple, affichez-les dans la console pour le moment
+//     console.log("Nom du site :", websiteName);
+//     console.log("URL du site :", websiteUrl);
+//     console.log("Mot de passe :", password);
+// }
 
 
     function submitForm(event) {

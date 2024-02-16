@@ -80,7 +80,7 @@ span {
     min-height: 55vh;
     border-radius: 20px;
     padding: 1em;
-    max-height: 60vh;
+    max-height: 70vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -215,6 +215,20 @@ label {
     font-family: 'RingBearer';
     font-size: 0.8em;
     color: bisque;
+    align-self: flex-start;
+    margin-left: 5rem;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+}
+
+.input-group{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 input.create-safebox-btn {
@@ -245,15 +259,14 @@ input[type="text"], input[type="email"], input[type="password"], input[type="url
     border-radius: 20px;
     border: 1px solid #262626;
     padding-left: 0.5em;
-    width: 100%;
+    width: 80%;
     height: 2em;
     font-family: 'NeuSharp';
 }
 
-input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="url"] {
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="url"]:focus {
     outline: none; /* pas de contour lors du focus */
     font-family: 'NeuSharp';
-    width: 100%;
     border: 1px solid #3a9594;
     box-shadow: 0 0 10px rgba(0,0,0,0.25);
 }
