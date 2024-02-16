@@ -239,6 +239,13 @@ label {
     margin-right: 1rem;
 }
 
+#createNewCardForm-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 input.create-safebox-btn {
     width: 10rem;
     height: 40px;
@@ -267,7 +274,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="url
     border-radius: 20px;
     border: 1px solid #262626;
     padding-left: 0.5em;
-    width: 80%;
+    width: 65%;
     height: 2em;
     font-family: 'NeuSharp';
 }
@@ -394,9 +401,33 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     width: 90%;
 }
 
-/* .display-password-data{
-    display: flex!important;
-    flex-direction: column;
+.random-btn{
+    width: 30px;
+    height: 30px;
+    align-self: center;
+    font-size: 0.8em;
+    border-radius: 50%;
+    color: #f3e6ca!important;
+    background-color: #e4782f!important;
+    border: none!important;
+    cursor: pointer;
+    font-family: 'NeuSharp'!important;
+    transition: font-size 0.3s ease;
+    display: flex;
     justify-content: center;
     align-items: center;
-} */
+    flex-shrink: 0;
+    margin-right: 1rem;
+}
+
+.random-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
+}
+
+.input-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

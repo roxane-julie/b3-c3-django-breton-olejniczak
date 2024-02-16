@@ -48,7 +48,17 @@
                 </div>
                 <div class="input-group">
                     <label for="password">Mot de passe :</label>
-                    <input type="password" id="password" name="password" class="input-card" required>
+                    <div class="input-wrapper">
+                        <input type="password" id="password-input" name="password" class="input-card" required>
+                            <button class="random-btn" onclick="document.getElementById('password-input').value = generatePassword();">
+                                <img class="input-icon random-icon" src="/static/images/shuffle-solid.svg" alt="random icon">
+                            </button>
+                            <button class="toggle-password random-btn" onclick="togglePasswordVisibility();">
+                                <img class="input-icon visibility-icon" src="/static/images/eye-solid.svg" alt="toggle visibility">
+                            </button>
+                        </input>
+                    </div>
+                    
                 </div>
                 <input type="hidden" name="id" value="{{ safebox.id }}">
                 <button type="submit" class="add-card-form-button"">Créer</button>
@@ -76,6 +86,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+function generatePassword() {
+    var length = 12,
+        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*",
+        retVal = "";
+    for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+}
+
+function togglePasswordVisibility() {
+    var passwordInput = document.getElementById('password-input');
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+
         function goBack() {
     window.history.back();
     }
@@ -98,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showCreateNewCardForm() {
         var form = document.getElementById('createNewCardForm-container');
-        form.style.display = 'block';
+        form.style.display = 'flex';
 
         var button = document.querySelector('.add-card-btn');
         button.style.display = 'none';
