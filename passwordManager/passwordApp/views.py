@@ -120,10 +120,14 @@ def deleteSafebox(request, safebox_id):
 
 def safeBoxContainer(request):
     safebox_id = request.GET.get('id')
+
     safebox = get_object_or_404(SafeBox, id=safebox_id)
+
     password_data = safebox.password_data.all().values('websiteName', 'websiteUrl', 'password')
     print(f"SAFEBOX DEBUG", list(password_data))
-    return render(request, 'safeBoxContainer.html', {'passwordDatas': list(password_data), 'safebox': safebox})
+    print(f"SAFEBOX", safebox.name)
+
+    return render(request, 'safeBoxContainer.html', {'passwordDatas': list(password_data), 'safebox': safebox, 'safebox_name': safebox.name})
 
 @login_required    
 def createNewCard(request):
@@ -153,7 +157,7 @@ def createNewCard(request):
                         'websiteName': new_passwordData.websiteName,
                         'websiteUrl': new_passwordData.websiteUrl,
                         'password': new_passwordData.password,
-                        'safebox': new_passwordData.safebox
+                        'safebox': new_passwordData.safebox.id
                     }
                 }
                 return JsonResponse(data)

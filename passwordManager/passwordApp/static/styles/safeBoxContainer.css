@@ -51,6 +51,29 @@ span {
     overflow-y: scroll;
 }
 
+/* Style the scrollbar */
+.password-data-list::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 4px;
+}
+
+/* Style the scrollbar track */
+.password-data-list::-webkit-scrollbar-track {
+    background: #0D151A;
+    border-radius: 10px;
+}
+
+/* Handle */
+.password-data-list::-webkit-scrollbar-thumb {
+    background: #5B6549;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.password-data-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 .dataCard-main-container{
     background-color: rgba(15, 24, 30, 0.8);
     width: 50vw;

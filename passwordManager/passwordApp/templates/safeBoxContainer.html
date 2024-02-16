@@ -13,7 +13,7 @@
     <div class="dataCard-main-container">
         <img class="passwords-title-img" src="{% static 'images/mage.png' %}" alt="mage">
         <div class="title-container">
-            Mots de passe stockés dans le coffre <br><span id="safebox-name"></span>
+            Mots de passe stockés dans le coffre <br><span id="safebox-name">{{ safebox.name }}</span>
         </div>
         <div class="password-data-list">
             {% if passwordDatas %}
@@ -47,9 +47,9 @@
     </div>
     <button class="goback-btn" onclick="goBack()"><img class="goback-icon" src="{% static 'images/arrow-left-solid.svg' %}" alt="arrow-left">Revenir à la galerie des coffres</button>
     <script>
-        var urlParams = new URLSearchParams(window.location.search);
-        var name = urlParams.get('name');
-        document.getElementById('safebox-name').textContent = name;
+        // var urlParams = new URLSearchParams(window.location.search);
+        // var name = urlParams.get('name');
+        // document.getElementById('safebox-name').textContent = name;
 
         function goBack() {
     window.history.back();

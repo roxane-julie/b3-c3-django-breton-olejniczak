@@ -36,3 +36,6 @@ class SafeBox(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     password_manager_data = models.OneToOneField(PassWordManagerDataModel, on_delete=models.CASCADE, related_name='safe_box', null=True)
+
+    def __str__(self):
+        return f"SafeBox object (id: {self.id}, name: {self.name})"
