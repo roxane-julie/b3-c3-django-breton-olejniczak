@@ -10,7 +10,7 @@
 </head>
 <body>
     {% include 'navigation.html' %}
-    <div class="safe-box-cards-container">
+    <div class="dataCard-main-container">
         <img class="passwords-title-img" src="{% static 'images/mage.png' %}" alt="mage">
         <div class="title-container">
             Mots de passe stockés dans le coffre <br><span id="safebox-name"></span>
@@ -18,31 +18,32 @@
         <div class="password-data-list">
             {% if passwordDatas %}
             {% for passwordData in passwordDatas %}
-            <div id="dataCard-{{ passwordData.id }}" class="dataCard">
-                <h2>{{passwordData.websiteName}}</h2>
+            <div id="dataCard-{{ passwordData.id }}" class="dataCard-name-container">
+                    <h2 class="dataCard-name">{{passwordData.websiteName}}</h2>
             </div>
             {% endfor %}
         {% else %}
             <p>Aucun mot-de-passe enregistré</p>
         {% endif %}
-        <button class="goback-btn" onclick="showCreateNewCardForm()">Ajouter un mot de passe</button>
+        </div>
+        <button class="add-card-btn" onclick="showCreateNewCardForm()">Ajouter un mot de passe</button>
         <div id="createNewCardForm-container" style="display: none;">
             <form id="createNewCardForm" method="POST" action="{% url 'createNewCard' %}">
                 {% csrf_token %}
                 <label for="websiteName">Nom du site :</label>
-                <input type="text" id="websiteName" name="websiteName" required>
+                <input type="text" id="websiteName" name="websiteName" class="input-card"
+                required>
         
                 <label for="websiteUrl">URL du site :</label>
-                <input type="url" id="websiteUrl" name="websiteUrl">
+                <input type="url" id="websiteUrl" name="websiteUrl" class="input-card">
         
                 <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" class="input-card" required>
         
-                <button type="submit">Créer</button>
+                <button type="submit" class="add-card-form-button"">Créer</button>
             </form>
         </div>
         <div id="success" style="display: none;">Carte ajoutée avec succès</div>
-        </div>
     </div>
     <button class="goback-btn" onclick="goBack()"><img class="goback-icon" src="{% static 'images/arrow-left-solid.svg' %}" alt="arrow-left">Revenir à la galerie des coffres</button>
     <script>
@@ -57,6 +58,12 @@
     function showCreateNewCardForm() {
         var form = document.getElementById('createNewCardForm-container');
         form.style.display = 'block';
+
+        var button = document.querySelector('.add-card-btn');
+    button.style.display = 'none';
+
+    var passwordList = document.querySelector('.password-data-list');
+    passwordList.style.display = 'none';
     }
 
     function submitForm(event) {
