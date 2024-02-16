@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
-from .forms import SignUpForm, LoginForm, CreateNewSafeBox
+from django.shortcuts import get_object_or_404, redirect, render
+from .forms import SignUpForm, LoginForm, CreateNewSafeBox, CreateNewCard
 from django.contrib.auth.hashers import make_password
 from .models import SafeBox, PassWordManagerDataModel
 from django.http import JsonResponse
@@ -75,6 +75,7 @@ def signOut(request):
 def myPasswordsManager(request):
     print(request)
     name = request.GET.get('name', None)
+    safebox_id = request.GET.get('id', None)
     print(name)
 
     if request.method == 'POST':
@@ -100,7 +101,7 @@ def myPasswordsManager(request):
     safeboxes = SafeBox.objects.filter(user=request.user)
     safebox_count = SafeBox.objects.count()
 
-    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name, 'active_tab': 'manager', 'safebox_count': safebox_count})
+    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name, 'id': safebox_id, 'active_tab': 'manager', 'safebox_count': safebox_count})
 
 @login_required
 def deleteSafebox(request, safebox_id):
@@ -117,9 +118,68 @@ def deleteSafebox(request, safebox_id):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+def safeBoxContainer(request):
+    safebox_id = request.GET.get('id')
+
+    safebox = get_object_or_404(SafeBox, id=safebox_id)
+
+    password_data = safebox.password_data.all().values('websiteName', 'websiteUrl', 'password')
+    print(f"SAFEBOX DEBUG", list(password_data))
+    print(f"SAFEBOX", safebox.name)
+
+    return render(request, 'safeBoxContainer.html', {'passwordDatas': list(password_data), 'safebox': safebox, 'safebox_name': safebox.name})
+
 @login_required    
 def createNewCard(request):
-# Définir ici la logique du formulaire pour créer une nouvelle instance de PassWordManagerDataModel
+    if request.method == 'POST':
+        safebox_id = request.POST.get('id')  # Get the safebox ID from the POST data
+        form = CreateNewCard(request.POST)
+        if form.is_valid():
+            websiteName = form.cleaned_data['websiteName']
+            websiteUrl = form.cleaned_data['websiteUrl']
+            password = form.cleaned_data['password']
+            user = request.user
 
-    passwordDatas = PassWordManagerDataModel.objects.filter(user=request.user)
-    return render(request, 'myPasswordsManager.html', {'form': form, 'passwordDatas': passwordDatas, 'name': name, 'active_tab': 'manager'})
+            safebox = SafeBox.objects.get(id=safebox_id)  # Get the SafeBox instance with this ID
+            safebox=safebox
+
+            hashed_password = make_password(password)
+
+            try:
+                new_passwordData = PassWordManagerDataModel.objects.create(
+                    websiteName=websiteName, websiteUrl=websiteUrl, password=hashed_password,
+                    user=user, safebox=safebox)
+                data = {
+                    'success': True,
+                    'message': "La carte d'informations de votre mot de passe a été créée avec succès",
+                    'passwordData': {
+                        'id': new_passwordData.id,
+                        'websiteName': new_passwordData.websiteName,
+                        'websiteUrl': new_passwordData.websiteUrl,
+                        'password': new_passwordData.password,
+                        'safebox': new_passwordData.safebox.id
+                    }
+                }
+                return JsonResponse(data)
+            except Exception as e:
+                # Gérer l'erreur ici
+                print(f"Erreur lors de la création de la nouvelle carte : {e}")
+                data = {
+                    'success': False,
+                    'message': f"Erreur lors de la création de la nouvelle carte : {e}",
+                }
+                return JsonResponse(data, status=500)
+        else:
+            # Le formulaire n'est pas valide
+            data = {
+                'success': False,
+                'message': "Le formulaire n'est pas valide",
+            }
+            return JsonResponse(data, status=400)
+    else:
+        # La requête n'est pas une requête POST
+        data = {
+            'success': False,
+            'message': "La requête n'est pas une requête POST",
+        }
+        return JsonResponse(data)

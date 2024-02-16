@@ -26,5 +26,6 @@ urlpatterns = [
     path('manager/', views.myPasswordsManager, name='myPasswordsManager'),
     path('manager/safeBoxContainer/', views.safeBoxContainer, name='safeBoxContainer'),
     path('manager/deleteSafebox/<int:safebox_id>/', views.deleteSafebox, name='deleteSafebox'),
+    path('createNewCard/', views.createNewCard, name='createNewCard'),
     path('signout/', views.signOut, name='signOut'),
 ]

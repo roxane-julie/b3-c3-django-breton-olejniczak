@@ -74,10 +74,10 @@
         var safeboxName = safeboxNameElement.textContent || safeboxNameElement.innerText;
         console.log(safeboxName);
 
-    fetch('?name=' + encodeURIComponent(safeboxName))
+    fetch('?id=' + encodeURIComponent(id))
     .catch(error => console.error('Error:', error));
     // // Redirige vers safeBoxContainer.html avec le nom en paramètre
-    window.location.href = 'safeBoxContainer/?name=' + encodeURIComponent(safeboxName);
+    window.location.href = 'safeBoxContainer/?id=' + encodeURIComponent(id);
 }
 
     document.getElementById('create-safebox-form').addEventListener('submit', function(event) {

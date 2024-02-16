@@ -44,13 +44,42 @@ span {
     font-family: 'Aniron';
 }
 
+.password-data-list{
+    margin-top: 1.2em;
+    max-height: 400px;
+    width: 100%;
+    overflow-y: scroll;
+}
 
-.safe-box-cards-container{
+/* Style the scrollbar */
+.password-data-list::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 4px;
+}
+
+/* Style the scrollbar track */
+.password-data-list::-webkit-scrollbar-track {
+    background: #0D151A;
+    border-radius: 10px;
+}
+
+/* Handle */
+.password-data-list::-webkit-scrollbar-thumb {
+    background: #5B6549;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.password-data-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.dataCard-main-container{
     background-color: rgba(15, 24, 30, 0.8);
-    width: 35vw;
+    width: 50vw;
     min-height: 55vh;
     border-radius: 20px;
-    padding: 2em;
+    padding: 1em;
     max-height: 60vh;
     display: flex;
     flex-direction: column;
@@ -58,15 +87,88 @@ span {
     align-items: center;
 }
 
+.dataCard-name-container{
+    width: 87%;
+    background-color:  rgba(9, 14, 18, 0.5);
+    border-radius: 10px;
+    padding: 0 1.5em;
+    margin-bottom: 0.7em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dataCard-name{
+    font-family: "NeuSharp";
+    font-size: 1em;
+    cursor: pointer;
+    color: #ffe4c4;
+
+}
+
+.dataCard-name-container:hover .dataCard-name {
+    color: #DCB55A;
+}
+
 .passwords-title-img{
     width: 30%;
 }
 
-.goback-btn{
-    width: 20rem;
-    height: 40px;
+.add-card-form-button {
+    width: 50px;
+    height: 50px;
     align-self: center;
     font-size: 0.8em;
+    border-radius: 50%;
+    padding: 10px;
+    color: #f3e6ca!important;
+    background-color: #e4782f!important;
+    border: none!important;
+    cursor: pointer;
+    font-family: 'NeuSharp'!important;
+    transition: font-size 0.3s ease;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-card-form-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
+}
+
+.add-card-btn{
+    width: 15rem;
+    height: 30px;
+    align-self: center;
+    font-size: 0.7em;
+    border-radius: 12px;
+    padding: 10px;
+    color: #f3e6ca!important;
+    background-color: #e4782f!important;
+    border: none!important;
+    cursor: pointer;
+    font-family: 'NeuSharp'!important;
+    transition: font-size 0.3s ease;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.add-card-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
+}
+
+.goback-btn{
+    width: 15rem;
+    height: 30px;
+    align-self: center;
+    font-size: 0.7em;
     border-radius: 12px;
     padding: 10px;
     color: #f3e6ca!important;
@@ -88,10 +190,104 @@ span {
 }
 
 .goback-icon{
-    width: 8%;
+    width: 7%;
 }
 
 p {
     font-family: 'Neusharp';
     color: bisque;
+}
+
+#createNewCardForm-container{
+    width: 100%;
+}
+
+#createNewCardForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+
+label {
+    font-family: 'RingBearer';
+    font-size: 0.8em;
+    color: bisque;
+}
+
+input.create-safebox-btn {
+    width: 10rem;
+    height: 40px;
+    align-self: center;
+    font-size: 0.8em;
+    border-radius: 12px;
+    padding: 10px;
+    color: #f3e6ca!important;
+    background-color: #e4782f!important;
+    border: none!important;
+    cursor: pointer;
+    font-family: 'NeuSharp'!important;
+    transition: font-size 0.3s ease;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+input.create-safebox-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="url"] {
+    background-color: rgba(237, 216, 184, 0.5);
+    border: none; /* pas de bordure */
+    border-radius: 20px;
+    border: 1px solid #262626;
+    padding-left: 0.5em;
+    width: 100%;
+    height: 2em;
+    font-family: 'NeuSharp';
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="url"] {
+    outline: none; /* pas de contour lors du focus */
+    font-family: 'NeuSharp';
+    width: 100%;
+    border: 1px solid #3a9594;
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+
+
+
+.input-card{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1em;
+    margin-right: 1.4em;
+    align-self: center;
+}
+
+::placeholder {
+    color: #8C8C7E;
+    opacity: 1; /* Firefox */
+    font-family: 'NeuSharp';
+    font-weight: 400;
+}
+
+/* Internet Explorer 10-11 */
+:-ms-input-placeholder {
+    color: #8C8C7E;
+    font-family: 'NeuSharp';
+    font-weight: 400;
+}
+
+/* Edge */
+::-ms-input-placeholder {
+    color: #8C8C7E;
+    font-family: 'NeuSharp';
+    font-weight: 400;
 }
