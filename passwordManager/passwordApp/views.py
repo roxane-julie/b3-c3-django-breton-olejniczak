@@ -75,6 +75,7 @@ def signOut(request):
 def myPasswordsManager(request):
     print(request)
     name = request.GET.get('name', None)
+    safebox_id = request.GET.get('id', None)
     print(name)
 
     if request.method == 'POST':
@@ -100,7 +101,7 @@ def myPasswordsManager(request):
     safeboxes = SafeBox.objects.filter(user=request.user)
     safebox_count = SafeBox.objects.count()
 
-    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name, 'active_tab': 'manager', 'safebox_count': safebox_count})
+    return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name, 'id': safebox_id, 'active_tab': 'manager', 'safebox_count': safebox_count})
 
 @login_required
 def deleteSafebox(request, safebox_id):
@@ -120,6 +121,12 @@ def deleteSafebox(request, safebox_id):
 def safeBoxContainer(request):
     passwordDatas = PassWordManagerDataModel.objects.all()
     return render(request, 'safeBoxContainer.html', {'passwordDatas': passwordDatas})
+
+def get_password_data(request):
+    safebox_id = request.GET.get('id')
+    safebox = get_object_or_404(SafeBox, id=safebox_id)
+    password_data = safebox.passwords.all().values('websiteName', 'websiteUrl', 'password')
+    return JsonResponse(list(password_data), safe=False)
 
 @login_required    
 def createNewCard(request):

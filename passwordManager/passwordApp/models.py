@@ -8,6 +8,7 @@ class PassWordManagerDataModel(models.Model):
     websiteUrl = models.URLField(blank=True, default='')
     password = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    safebox = models.ForeignKey('SafeBox', on_delete=models.CASCADE, null=True, related_name='password_data')
 
     def get_website_name(self):
         return self.websiteName
@@ -34,4 +35,4 @@ class PassWordManagerDataModel(models.Model):
 class SafeBox(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    password_manager_data = models.ManyToManyField(PassWordManagerDataModel)
+    password_manager_data = models.ManyToManyField(PassWordManagerDataModel, related_name='safe_boxes')
