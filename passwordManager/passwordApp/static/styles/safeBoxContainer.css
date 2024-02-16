@@ -48,6 +48,8 @@ span {
     display: none;
 }
 
+
+
 .password-data-list{
     margin-top: 1.2em;
     max-height: 400px;
@@ -309,4 +311,13 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     color: #8C8C7E;
     font-family: 'NeuSharp';
     font-weight: 400;
+}
+
+.goTopasswordList{
+    width: 278px;
+}
+
+.disabled-input{
+    padding-left: 1.5rem!important;
+    padding-right: 1.5rem!important;
 }

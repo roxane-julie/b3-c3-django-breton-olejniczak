@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Cachez displayPasswordData et affichez passwordDataList
     displayPasswordData.style.display = 'none';
     passwordDataList.style.display = 'block';
-    goBackButton.style.display = 'block';
+    goBackButton.style.display = 'flex';
     toSafeboxBtn.style.display = 'none';
     }
 
@@ -166,7 +166,7 @@ addButton.style.display = 'none';
 
     subContainer.style.display = 'block';
     goBackButton.style.display = 'none';
-    goTopasswordListBtn.style.display = 'block';
+    goTopasswordListBtn.style.display = 'flex';
 
     var htmlContent = '';
 
@@ -191,7 +191,7 @@ for (var key in passwordData) {
     }
 
     // Ajoutez le label et l'input à htmlContent
-    htmlContent += '<div class="input-group-infos"><label>' + inputLabel + '</label><input class="input-card" type="' + inputType + '" value="' + passwordData[key] + '" disabled></div>';
+    htmlContent += '<div class="input-group-infos"><label>' + inputLabel + '</label><input class="input-card disabled-input" type="' + inputType + '" value="' + passwordData[key] + '" disabled></div>';
 }
 
 htmlContent += '</div>'; // Fermez la div .inputs-data-container
