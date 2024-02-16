@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .forms import SignUpForm, LoginForm, CreateNewSafeBox, CreateNewCard
 from django.contrib.auth.hashers import make_password
 from .models import SafeBox, PassWordManagerDataModel
@@ -119,18 +119,16 @@ def deleteSafebox(request, safebox_id):
         return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 def safeBoxContainer(request):
-    passwordDatas = PassWordManagerDataModel.objects.all()
-    return render(request, 'safeBoxContainer.html', {'passwordDatas': passwordDatas})
-
-def get_password_data(request):
     safebox_id = request.GET.get('id')
     safebox = get_object_or_404(SafeBox, id=safebox_id)
-    password_data = safebox.passwords.all().values('websiteName', 'websiteUrl', 'password')
-    return JsonResponse(list(password_data), safe=False)
+    password_data = safebox.password_data.all().values('websiteName', 'websiteUrl', 'password')
+    print(f"SAFEBOX DEBUG", list(password_data))
+    return render(request, 'safeBoxContainer.html', {'passwordDatas': list(password_data), 'safebox': safebox})
 
 @login_required    
 def createNewCard(request):
     if request.method == 'POST':
+        safebox_id = request.POST.get('id')  # Get the safebox ID from the POST data
         form = CreateNewCard(request.POST)
         if form.is_valid():
             websiteName = form.cleaned_data['websiteName']
@@ -138,12 +136,15 @@ def createNewCard(request):
             password = form.cleaned_data['password']
             user = request.user
 
+            safebox = SafeBox.objects.get(id=safebox_id)  # Get the SafeBox instance with this ID
+            safebox=safebox
+
             hashed_password = make_password(password)
 
             try:
                 new_passwordData = PassWordManagerDataModel.objects.create(
                     websiteName=websiteName, websiteUrl=websiteUrl, password=hashed_password,
-                    user=user)
+                    user=user, safebox=safebox)
                 data = {
                     'success': True,
                     'message': "La carte d'informations de votre mot de passe a été créée avec succès",
@@ -151,7 +152,8 @@ def createNewCard(request):
                         'id': new_passwordData.id,
                         'websiteName': new_passwordData.websiteName,
                         'websiteUrl': new_passwordData.websiteUrl,
-                        'password': new_passwordData.password
+                        'password': new_passwordData.password,
+                        'safebox': new_passwordData.safebox
                     }
                 }
                 return JsonResponse(data)

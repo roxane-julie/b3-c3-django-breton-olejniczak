@@ -16,15 +16,15 @@
             Mots de passe stockés dans le coffre <br><span id="safebox-name"></span>
         </div>
         <div class="password-data-list">
-            <!-- {% if passwordDatas %}
+            {% if passwordDatas %}
             {% for passwordData in passwordDatas %}
             <div id="dataCard-{{ passwordData.id }}" class="dataCard-name-container">
                     <h2 class="dataCard-name">{{passwordData.websiteName}}</h2>
             </div>
-            {% endfor %} -->
-        <!-- {% else %} -->
+            {% endfor %}
+            {% else %}
             <p>Aucun mot-de-passe enregistré</p>
-        <!-- {% endif %} -->
+            {% endif %}
         </div>
         <button class="add-card-btn" onclick="showCreateNewCardForm()">Ajouter un mot de passe</button>
         <div id="createNewCardForm-container" style="display: none;">
@@ -39,7 +39,7 @@
         
                 <label for="password">Mot de passe :</label>
                 <input type="password" id="password" name="password" class="input-card" required>
-        
+                <input type="hidden" name="id" value="{{ safebox.id }}">
                 <button type="submit" class="add-card-form-button"">Créer</button>
             </form>
         </div>
@@ -55,28 +55,29 @@
     window.history.back();
     }
 
-    window.onload = function() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var safeboxId = urlParams.get('id');
+    // window.onload = function() {
+    //     var urlParams = new URLSearchParams(window.location.search);
+    //     var safeboxId = urlParams.get('id');
 
-        fetch('/get_password_data/?id=' + safeboxId)
-            .then(response => response.json())
-            .then(data => {
-                var passwordDataContainer = document.querySelector('.password-data-list');
-                data.forEach(passwordData => {
-                    var dataCard = document.createElement('div');
-                    dataCard.id = 'dataCard-' + passwordData.id;
-                    dataCard.className = 'dataCard-name-container';
+    //     fetch('/get_password_data/?id=' + safeboxId)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             var passwordDataContainer = document.querySelector('.password-data-list');
+    //             data.forEach(passwordData => {
+    //                 var dataCard = document.createElement('div');
+    //                 dataCard.id = 'dataCard-' + passwordData.id;
+    //                 dataCard.className = 'dataCard-name-container';
 
-                    var dataCardName = document.createElement('h2');
-                    dataCardName.className = 'dataCard-name';
-                    dataCardName.textContent = passwordData.websiteName;
+    //                 var dataCardName = document.createElement('h2');
+    //                 dataCardName.className = 'dataCard-name';
+    //                 dataCardName.textContent = passwordData.websiteName;
 
-                    dataCard.appendChild(dataCardName);
-                    passwordDataContainer.appendChild(dataCard);
-                });
-            });
-    }
+    //                 dataCard.appendChild(dataCardName);
+    //                 passwordDataContainer.appendChild(dataCard);
+    //             });
+    //         });
+    // }
 
     function showCreateNewCardForm() {
         var form = document.getElementById('createNewCardForm-container');
