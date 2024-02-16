@@ -394,9 +394,9 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     width: 90%;
 }
 
-.display-password-data{
+/* .display-password-data{
     display: flex!important;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+} */
