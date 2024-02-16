@@ -12,8 +12,11 @@
     {% include 'navigation.html' %}
     <div class="dataCard-main-container">
         <img class="passwords-title-img" src="{% static 'images/mage.png' %}" alt="mage">
-        <div class="title-container">
+        <div class="title-container" id="title-safebox">
             Mots de passe stockés dans le coffre <br><span id="safebox-name">{{ safebox.name }}</span>
+        </div>
+        <div class="title-container" id="title-secret-card">
+            Carte d'informations secrètes dans <br><span id="safebox-name">{{ safebox.name }}</span>
         </div>
         <div class="display-password-data"></div>
         <div class="password-data-list">
@@ -79,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var passwordDataList = document.querySelector('.password-data-list');
     var goBackButton = document.querySelector('.goback-btn');
     var toSafeboxBtn = document.querySelector('.goTopasswordList');
+    var titleContainer = document.querySelector('.title-container');
 
     // Cachez displayPasswordData et affichez passwordDataList
     displayPasswordData.style.display = 'none';
@@ -105,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var form = document.getElementById('createNewCardForm-container');
         form.addEventListener('submit', function() {
             var titleContainer = document.querySelector('.title-container');
-            titleContainer.style.display = 'block';
+            titleContainer.style.display = 'flex';
         });
     };
 
@@ -145,12 +149,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function displayPasswordData(passwordData) {
     console.log(passwordData)
-    var titleContainer = document.querySelector('.title-container');
+    var titleSafebox = document.querySelector('#title-safebox');
+    var titleContainer = document.querySelector('#title-secret-card');
 var safeboxName = document.querySelector('#safebox-name');
 
-titleContainer.innerHTML = 'Carte d\'informations secrètes <br><span id="safebox-name">' + passwordData.websiteName + '</span>';
+// titleContainer.innerHTML = 'Carte d\'informations secrètes <br><span id="safebox-name">' + passwordData.websiteName + '</span>';
 var addButton = document.querySelector('.add-card-btn');
-
+titleSafebox.style.display = 'none';
+titleContainer.style.display = 'flex';
 // Faites disparaître le bouton
 addButton.style.display = 'none';
     // Sélectionnez l'élément où vous voulez afficher les données

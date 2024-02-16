@@ -44,6 +44,10 @@ span {
     font-family: 'Aniron';
 }
 
+#title-secret-card{
+    display: none;
+}
+
 .password-data-list{
     margin-top: 1.2em;
     max-height: 400px;
