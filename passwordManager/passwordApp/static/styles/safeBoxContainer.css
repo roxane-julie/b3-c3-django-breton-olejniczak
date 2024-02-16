@@ -227,14 +227,15 @@ label {
     margin-left: 5rem;
     margin-bottom: 1rem;
     margin-top: 0.5rem;
+    width: 120px;
 }
 
 .input-group{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 90%;
     margin-left: 1rem;
     margin-right: 1rem;
 }
@@ -277,6 +278,11 @@ input[type="text"], input[type="email"], input[type="password"], input[type="url
     width: 65%;
     height: 2em;
     font-family: 'NeuSharp';
+    padding-left: 1rem;
+}
+
+input[type="text"],input[type="url"] {
+    text-align: left;
 }
 
 input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="url"]:focus {

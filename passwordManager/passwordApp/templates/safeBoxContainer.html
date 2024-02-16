@@ -38,23 +38,23 @@
             <form id="createNewCardForm" method="POST" action="{% url 'createNewCard' %}">
                 {% csrf_token %}
                 <div class="input-group">
-                    <label for="websiteName">Nom du site :</label>
+                    <label for="websiteName">Nom du site</label>
                     <input type="text" id="websiteName" name="websiteName" class="input-card"
                     required>
                 </div>
                 <div class="input-group">
-                    <label for="websiteUrl">URL du site :</label>
+                    <label for="websiteUrl">URL du site</label>
                     <input type="url" id="websiteUrl" name="websiteUrl" class="input-card">
                 </div>
                 <div class="input-group">
-                    <label for="password">Mot de passe :</label>
+                    <label for="password">Mot de passe</label>
                     <div class="input-wrapper">
                         <input type="password" id="password-input" name="password" class="input-card" required>
-                            <button class="random-btn" onclick="document.getElementById('password-input').value = generatePassword();">
-                                <img class="input-icon random-icon" src="/static/images/shuffle-solid.svg" alt="random icon">
-                            </button>
                             <button class="toggle-password random-btn" onclick="togglePasswordVisibility();">
                                 <img class="input-icon visibility-icon" src="/static/images/eye-solid.svg" alt="toggle visibility">
+                            </button>
+                            <button class="random-btn" onclick="document.getElementById('password-input').value = generatePassword();">
+                                <img class="input-icon random-icon" src="/static/images/shuffle-solid.svg" alt="random icon">
                             </button>
                         </input>
                     </div>
