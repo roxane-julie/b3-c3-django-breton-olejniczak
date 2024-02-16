@@ -51,11 +51,24 @@
         <div id="success" style="display: none;">Carte ajoutée avec succès</div>
     </div>
     <button class="goback-btn" onclick="goBack()"><img class="goback-icon" src="{% static 'images/arrow-left-solid.svg' %}" alt="arrow-left">Revenir à la galerie des coffres</button>
-    <button class="goback-btn" onclick="goBackToPasswordList()"><img class="goback-icon" src="{% static 'images/arrow-left-solid.svg' %}" alt="arrow-left">Revenir à la liste des mots de passe</button>
+    <button class="goback-btn goTopasswordList" onclick="goBackToPasswordList()"><img class="goback-icon" src="{% static 'images/arrow-left-solid.svg' %}" alt="arrow-left">Revenir à la liste des mots de passe</button>
     <script>
         // var urlParams = new URLSearchParams(window.location.search);
         // var name = urlParams.get('name');
         // document.getElementById('safebox-name').textContent = name;
+        var isFirstRender = true;
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (isFirstRender) {
+        var toSafeboxBtn = document.querySelector('.goTopasswordList');
+
+        // Cachez toSafeboxBtn
+        toSafeboxBtn.style.display = 'none';
+
+        // Mettez à jour isFirstRender
+        isFirstRender = false;
+    }
+});
 
         function goBack() {
     window.history.back();
@@ -64,10 +77,14 @@
     function goBackToPasswordList(){
         var displayPasswordData = document.querySelector('.display-password-data');
     var passwordDataList = document.querySelector('.password-data-list');
+    var goBackButton = document.querySelector('.goback-btn');
+    var toSafeboxBtn = document.querySelector('.goTopasswordList');
 
     // Cachez displayPasswordData et affichez passwordDataList
     displayPasswordData.style.display = 'none';
     passwordDataList.style.display = 'block';
+    goBackButton.style.display = 'block';
+    toSafeboxBtn.style.display = 'none';
     }
 
     function showCreateNewCardForm() {
@@ -93,7 +110,6 @@
     };
 
     function showCardInformations(id) {
-        var goBackButton = document.querySelector('.goback-btn');
        
         var passwordListContainer = document.querySelector('.password-data-list');
 
@@ -139,9 +155,12 @@ var addButton = document.querySelector('.add-card-btn');
 addButton.style.display = 'none';
     // Sélectionnez l'élément où vous voulez afficher les données
     var goBackButton = document.querySelector('.goback-btn');
+    var goTopasswordListBtn = document.querySelector('.goTopasswordList');
     var subContainer = document.querySelector('.display-password-data');
 
     subContainer.style.display = 'block';
+    goBackButton.style.display = 'none';
+    goTopasswordListBtn.style.display = 'block';
 
     var htmlContent = '';
 
