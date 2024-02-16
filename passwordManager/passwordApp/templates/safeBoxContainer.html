@@ -15,6 +15,7 @@
         <div class="title-container">
             Mots de passe stockés dans le coffre <br><span id="safebox-name">{{ safebox.name }}</span>
         </div>
+        <div class="display-password-data"></div>
         <div class="password-data-list">
             {% if passwordDatas %}
             {% for passwordData in passwordDatas %}
@@ -102,12 +103,51 @@
         return response.json();
     })
     .then(data => {
+        console.log(data);
         // Appeler une fonction pour afficher les informations du mot de passe
         displayPasswordData(data.passwordDatas);
     })
     .catch(error => {
         console.error('Erreur:', error);
     });
+}
+
+function displayPasswordData(passwordData) {
+    console.log(passwordData)
+    var titleContainer = document.querySelector('.title-container');
+var safeboxName = document.querySelector('#safebox-name');
+
+titleContainer.innerHTML = 'Carte d\'informations secrètes <br><span id="safebox-name">' + passwordData.websiteName + '</span>';
+var addButton = document.querySelector('.add-card-btn');
+
+// Faites disparaître le bouton
+addButton.style.display = 'none';
+    // Sélectionnez l'élément où vous voulez afficher les données
+    var container = document.querySelector('.password-data-list');
+    var htmlContent = '';
+
+    // Parcourez chaque élément de passwordData
+    for (var key in passwordData) {
+    // Si la clé est 'safebox', continuez à la prochaine itération
+    if (key === 'safebox' || key === 'id') continue;
+
+    var inputType = 'text'; // Par défaut, le type d'input est 'text'
+
+    // Déterminez le type d'input en fonction de la clé
+    if (key === 'password') {
+        inputType = 'password';
+    } else if (key === 'websiteUrl') {
+        inputType = 'url';
+    } else if (key === 'websiteName') {
+        inputType = 'text';
+    }
+
+    // Ajoutez le label et l'input à htmlContent
+    htmlContent += '<label>' + key + '</label><input class="input-card" type="' + inputType + '" value="' + passwordData[key] + '" disabled>';
+}
+
+    // Mettez à jour le contenu HTML de container
+    container.innerHTML = htmlContent;
 }
 
 //     function showCardInformations(passwordData) {
