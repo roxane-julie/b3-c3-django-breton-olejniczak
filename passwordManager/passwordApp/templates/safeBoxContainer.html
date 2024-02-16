@@ -51,6 +51,7 @@
         <div id="success" style="display: none;">Carte ajoutée avec succès</div>
     </div>
     <button class="goback-btn" onclick="goBack()"><img class="goback-icon" src="{% static 'images/arrow-left-solid.svg' %}" alt="arrow-left">Revenir à la galerie des coffres</button>
+    <button class="goback-btn" onclick="goBackToPasswordList()"><img class="goback-icon" src="{% static 'images/arrow-left-solid.svg' %}" alt="arrow-left">Revenir à la liste des mots de passe</button>
     <script>
         // var urlParams = new URLSearchParams(window.location.search);
         // var name = urlParams.get('name');
@@ -58,6 +59,15 @@
 
         function goBack() {
     window.history.back();
+    }
+
+    function goBackToPasswordList(){
+        var displayPasswordData = document.querySelector('.display-password-data');
+    var passwordDataList = document.querySelector('.password-data-list');
+
+    // Cachez displayPasswordData et affichez passwordDataList
+    displayPasswordData.style.display = 'none';
+    passwordDataList.style.display = 'block';
     }
 
     function showCreateNewCardForm() {
@@ -83,34 +93,39 @@
     };
 
     function showCardInformations(id) {
-    var idValue = id.dataset.id
-    // var urlParams = new URLSearchParams(window.location.search);
-    // var safeBoxContainerId = urlParams.get('id');
-    // var idToUrl = `?id=${safeBoxContainerId}/`;
-    // console.log(idToUrl);
-    var csrfToken = getCookie('csrftoken');
+        var goBackButton = document.querySelector('.goback-btn');
+       
+        var passwordListContainer = document.querySelector('.password-data-list');
 
-    fetch('getPasswordData/' + idValue + '/', {
-        method: 'GET',
-        headers: {
-            'X-CSRFToken': csrfToken
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erreur lors de la récupération des informations du mot de passe');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        // Appeler une fonction pour afficher les informations du mot de passe
-        displayPasswordData(data.passwordDatas);
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
-    });
-}
+        passwordListContainer.style.display = 'none';
+        
+
+    // Changez le texte du bouton
+        // goBackButton.textContent = 'Revenir à la liste des mots de passe';
+        var idValue = id.dataset.id
+        var csrfToken = getCookie('csrftoken');
+
+        fetch('getPasswordData/' + idValue + '/', {
+            method: 'GET',
+            headers: {
+                'X-CSRFToken': csrfToken
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des informations du mot de passe');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            // Appeler une fonction pour afficher les informations du mot de passe
+            displayPasswordData(data.passwordDatas);
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
+    }
 
 function displayPasswordData(passwordData) {
     console.log(passwordData)
@@ -123,31 +138,41 @@ var addButton = document.querySelector('.add-card-btn');
 // Faites disparaître le bouton
 addButton.style.display = 'none';
     // Sélectionnez l'élément où vous voulez afficher les données
-    var container = document.querySelector('.password-data-list');
+    var goBackButton = document.querySelector('.goback-btn');
+    var subContainer = document.querySelector('.display-password-data');
+
+    subContainer.style.display = 'block';
+
     var htmlContent = '';
 
-    // Parcourez chaque élément de passwordData
-    for (var key in passwordData) {
-    // Si la clé est 'safebox', continuez à la prochaine itération
+// Parcourez chaque élément de passwordData
+for (var key in passwordData) {
+    // Si la clé est 'safebox' ou 'id', continuez à la prochaine itération
     if (key === 'safebox' || key === 'id') continue;
 
     var inputType = 'text'; // Par défaut, le type d'input est 'text'
+    var inputLabel = '';
 
     // Déterminez le type d'input en fonction de la clé
     if (key === 'password') {
         inputType = 'password';
+        inputLabel = 'password';
     } else if (key === 'websiteUrl') {
         inputType = 'url';
+        inputLabel = 'Adresse du site'
     } else if (key === 'websiteName') {
         inputType = 'text';
+        inputLabel = 'Nom du site'
     }
 
     // Ajoutez le label et l'input à htmlContent
-    htmlContent += '<label>' + key + '</label><input class="input-card" type="' + inputType + '" value="' + passwordData[key] + '" disabled>';
+    htmlContent += '<div class="input-group-infos"><label>' + inputLabel + '</label><input class="input-card" type="' + inputType + '" value="' + passwordData[key] + '" disabled></div>';
 }
 
-    // Mettez à jour le contenu HTML de container
-    container.innerHTML = htmlContent;
+htmlContent += '</div>'; // Fermez la div .inputs-data-container
+
+// Mettez à jour le contenu HTML de container
+subContainer.innerHTML = htmlContent;
 }
 
 //     function showCardInformations(passwordData) {
