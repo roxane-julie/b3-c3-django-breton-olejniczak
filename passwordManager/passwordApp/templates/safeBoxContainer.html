@@ -22,8 +22,11 @@
         <div class="password-data-list">
             {% if passwordDatas %}
             {% for passwordData in passwordDatas %}
-            <div id="dataCard-{{ passwordData.id }}" class="dataCard-name-container" data-id="{{ passwordData.id }}" onclick="showCardInformations(this)">
-                    <h2 class="dataCard-name">{{passwordData.websiteName}}</h2>
+            <div id="dataCard-{{ passwordData.id }}" class="dataCard-name-container">
+                    <h2 class="dataCard-name" data-id="{{ passwordData.id }}" onclick="showCardInformations(this)">{{passwordData.websiteName}}</h2>
+                    <button class="minus-btn" onclick="">
+                        <img class="input-icon minus-icon" src="/static/images/minus-solid.svg" alt="add icon">
+                    </button>
             </div>
             {% endfor %}
             {% else %}
@@ -86,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Cachez displayPasswordData et affichez passwordDataList
     displayPasswordData.style.display = 'none';
-    passwordDataList.style.display = 'block';
+    passwordDataList.style.display = 'flex';
     goBackButton.style.display = 'flex';
     toSafeboxBtn.style.display = 'none';
     }
@@ -164,7 +167,7 @@ addButton.style.display = 'none';
     var goTopasswordListBtn = document.querySelector('.goTopasswordList');
     var subContainer = document.querySelector('.display-password-data');
 
-    subContainer.style.display = 'block';
+    subContainer.style.display = 'flex';
     goBackButton.style.display = 'none';
     goTopasswordListBtn.style.display = 'flex';
 
@@ -191,7 +194,7 @@ for (var key in passwordData) {
     }
 
     // Ajoutez le label et l'input à htmlContent
-    htmlContent += '<div class="input-group-infos"><label>' + inputLabel + '</label><input class="input-card disabled-input" type="' + inputType + '" value="' + passwordData[key] + '" disabled></div>';
+    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button></div>';
 }
 
 htmlContent += '</div>'; // Fermez la div .inputs-data-container
