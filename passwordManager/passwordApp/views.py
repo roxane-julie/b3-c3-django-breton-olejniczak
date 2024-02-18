@@ -119,6 +119,19 @@ def deleteSafebox(request, safebox_id):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+@login_required
+def deleteCard(request, safebox_id):
+    print("fonction de suppression d'une carte")
+    if request.method =='DELETE':
+        try:
+            safebox = SafeBox.objects.get(id=safebox_id, user=request.user)
+        except SafeBox.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Carte non trouvée.'})
+
+        safebox.delete()
+        return JsonResponse({'success': True, 'message': 'Carte supprimée avec succès.'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 
 def safeBoxContainer(request):

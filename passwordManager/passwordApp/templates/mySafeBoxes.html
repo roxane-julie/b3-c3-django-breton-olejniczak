@@ -1,190 +1,194 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'styles/mySafeBoxes.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 </head>
+
 <body>
     <div class="safebox-main-container">
         <div class="title-container">
             <img class="title-img" src="{% static 'images/golden_chest.png' %}" alt="chest">
             <h2 class="card-title">Mes Coffres-forts</h2>
         </div>
-            <div class="safebox-list">
-                {% if safeboxes %}
-                {% for safebox in safeboxes %}
-                <div id="safebox-{{ safebox.id }}" class="safebox">
-                    <div class="name-container">
-                        <h2 class="safebox-name" onclick="showSafebox('{{ safebox.id }}')">{{ safebox.name }}</h2>
-                        <button class="minus-btn" onclick="deleteSafebox('{{ safebox.id }}')">
-                            <img class="input-icon minus-icon" src="{% static 'images/minus-solid.svg' %}" alt="add icon">
-                        </button>
-                    </div>
-                        <div id="safebox-{{ safebox.id }}" class="safebox" style="display: none;" onclick="window.location.href='myPasswordsManager.html'">
-                        </div>
+        <div class="safebox-list">
+            {% if safeboxes %}
+            {% for safebox in safeboxes %}
+            <div id="safebox-{{ safebox.id }}" class="safebox">
+                <div class="name-container">
+                    <h2 class="safebox-name" onclick="showSafebox('{{ safebox.id }}')">{{ safebox.name }}</h2>
+                    <button class="minus-btn" onclick="deleteSafebox('{{ safebox.id }}')">
+                        <img class="input-icon minus-icon" src="{% static 'images/minus-solid.svg' %}" alt="add icon">
+                    </button>
                 </div>
-                {% endfor %}
+                <div id="safebox-{{ safebox.id }}" class="safebox" style="display: none;"
+                    onclick="window.location.href='myPasswordsManager.html'">
+                </div>
+            </div>
+            {% endfor %}
             {% else %}
-                <p class="no-safebox-message" style="text-align: center;">Aucun coffre fort existant</p>
+            <p class="no-safebox-message" style="text-align: center;">Aucun coffre fort existant</p>
             {% endif %}
-            </div>
-
-            <div class="create-safebox-form-container" id="create-safebox-form-container" style="display: none;" >
-                <form id="create-safebox-form" method="post">
-                    {% csrf_token %}
-                    {{ form.name.label_tag }}
-                    <div class="input-container">
-                        {{ form.name }}
-                    </div>
-                    <input class="create-safebox-btn" type="submit" value="Créer un coffre">
-                </form>
-            </div>
-            <button class="add-safebox-button">
-                <img class="input-icon" src="{% static 'images/plus-solid.svg' %}" alt="add icon">
-            </button>
         </div>
-        <!-- Ajoutez plus de cartes ici -->
+
+        <div class="create-safebox-form-container" id="create-safebox-form-container" style="display: none;">
+            <form id="create-safebox-form" method="post">
+                {% csrf_token %}
+                {{ form.name.label_tag }}
+                <div class="input-container">
+                    {{ form.name }}
+                </div>
+                <input class="create-safebox-btn" type="submit" value="Créer un coffre">
+            </form>
+        </div>
+        <button class="add-safebox-button">
+            <img class="input-icon" src="{% static 'images/plus-solid.svg' %}" alt="add icon">
+        </button>
+    </div>
+    <!-- Ajoutez plus de cartes ici -->
     </div>
     <script>
-    var addButton = document.querySelector('.add-safebox-button');
-    var formContainer = document.querySelector('.create-safebox-form-container');
-    var createButton = document.querySelector('.create-safebox-btn');
+        var addButton = document.querySelector('.add-safebox-button');
+        var formContainer = document.querySelector('.create-safebox-form-container');
+        var createButton = document.querySelector('.create-safebox-btn');
 
-        addButton.addEventListener('click', function() {
-        addButton.style.display = 'none';
-        console.log("Le bouton disparait")
-        formContainer.style.display = 'flex';
+        addButton.addEventListener('click', function () {
+            addButton.style.display = 'none';
+            console.log("Le bouton disparait")
+            formContainer.style.display = 'flex';
         });
 
-        createButton.addEventListener('click', function() {
-        addButton.style.display = 'flex';
-        console.log("Le bouton apparait");
-        if (formContainer.style.display !== 'flex') {
-        formContainer.style.display = 'none';
-    }
-        });
-
-    function showSafebox(id) {
-        var safebox = document.getElementById('safebox-' + id);
-        console.log(safebox);
-    // // Récupère le nom du coffre
-        var safeboxNameElement = safebox.querySelector('.safebox-name');
-        console.log(safeboxNameElement);
-        var safeboxName = safeboxNameElement.textContent || safeboxNameElement.innerText;
-        console.log(safeboxName);
-
-    fetch('?id=' + encodeURIComponent(id))
-    .catch(error => console.error('Error:', error));
-    // // Redirige vers safeBoxContainer.html avec le nom en paramètre
-    window.location.href = 'safeBoxContainer/?id=' + encodeURIComponent(id);
-}
-
-    document.getElementById('create-safebox-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    var form = this;
-    var formData = new FormData(form);
-
-    var csrfToken = getCookie('csrftoken');
-
-    fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: {
-            'X-CSRFToken': csrfToken
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-
-        var newSafebox = document.createElement('div');
-        newSafebox.setAttribute('id', `safebox-${(data.safebox.id)}`);
-
-        var newSafeboxContainer = document.createElement('div');
-        newSafeboxContainer.setAttribute('class', 'name-container');
-
-        var newSafeboxName = document.createElement('h2');
-        newSafeboxName.setAttribute('class', 'safebox-name');
-        newSafeboxName.setAttribute('onclick', `showSafebox('${data.safebox.id}')`);
-        newSafeboxName.textContent = data.safebox.name;
-
-        newSafeboxContainer.appendChild(newSafeboxName);
-
-        var newMinusButton = document.createElement('button');
-        newMinusButton.setAttribute('class', 'minus-btn');
-        newMinusButton.setAttribute('onclick', `deleteSafebox('${data.safebox.id}')`);
-
-        var newMinusIcon = document.createElement('img');
-        newMinusIcon.setAttribute('class', 'input-icon minus-icon');
-        newMinusIcon.setAttribute('src', "{% static 'images/minus-solid.svg' %}");
-        newMinusIcon.setAttribute('alt', 'add icon');
-
-        newMinusButton.appendChild(newMinusIcon);
-
-        newSafeboxContainer.appendChild(newMinusButton);
-
-        newSafebox.appendChild(newSafeboxContainer);
-
-        var safeboxList = document.querySelector('.safebox-list');
-        safeboxList.appendChild(newSafebox);
-    } else {
-        console.error('Erreur lors de la création du coffre fort');
-    }
-    })
-    .catch(error => console.error('Erreur:', error));
-});
-
-document.querySelector('.create-safebox-btn').addEventListener('click', function() {
-    document.getElementById('create-safebox-form-container').style.display = 'none';
-    document.querySelector('.no-safebox-message').style.display = 'none';
-});
-
-function deleteSafebox(id) {
-    var csrfToken = getCookie('csrftoken');
-
-    fetch('deleteSafebox/' + id + '/', {
-        method: 'DELETE',
-        headers: {
-            'X-CSRFToken': csrfToken
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erreur lors de la suppression du coffre-fort');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            // Supprime l'élément du DOM
-            var safebox = document.getElementById('safebox-' + id);
-            safebox.parentNode.removeChild(safebox);
-        } else {
-            console.error('Erreur:', data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
-    });
-}
-
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+        createButton.addEventListener('click', function () {
+            addButton.style.display = 'flex';
+            console.log("Le bouton apparait");
+            if (formContainer.style.display !== 'flex') {
+                formContainer.style.display = 'none';
             }
+        });
+
+        function showSafebox(id) {
+            var safebox = document.getElementById('safebox-' + id);
+            console.log(safebox);
+            // // Récupère le nom du coffre
+            var safeboxNameElement = safebox.querySelector('.safebox-name');
+            console.log(safeboxNameElement);
+            var safeboxName = safeboxNameElement.textContent || safeboxNameElement.innerText;
+            console.log(safeboxName);
+
+            fetch('?id=' + encodeURIComponent(id))
+                .catch(error => console.error('Error:', error));
+            // // Redirige vers safeBoxContainer.html avec le nom en paramètre
+            window.location.href = 'safeBoxContainer/?id=' + encodeURIComponent(id);
         }
-    }
-    return cookieValue;
-}
+
+        document.getElementById('create-safebox-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var form = this;
+            var formData = new FormData(form);
+
+            var csrfToken = getCookie('csrftoken');
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+
+                        var newSafebox = document.createElement('div');
+                        newSafebox.setAttribute('id', `safebox-${(data.safebox.id)}`);
+
+                        var newSafeboxContainer = document.createElement('div');
+                        newSafeboxContainer.setAttribute('class', 'name-container');
+
+                        var newSafeboxName = document.createElement('h2');
+                        newSafeboxName.setAttribute('class', 'safebox-name');
+                        newSafeboxName.setAttribute('onclick', `showSafebox('${data.safebox.id}')`);
+                        newSafeboxName.textContent = data.safebox.name;
+
+                        newSafeboxContainer.appendChild(newSafeboxName);
+
+                        var newMinusButton = document.createElement('button');
+                        newMinusButton.setAttribute('class', 'minus-btn');
+                        newMinusButton.setAttribute('onclick', `deleteSafebox('${data.safebox.id}')`);
+
+                        var newMinusIcon = document.createElement('img');
+                        newMinusIcon.setAttribute('class', 'input-icon minus-icon');
+                        newMinusIcon.setAttribute('src', "{% static 'images/minus-solid.svg' %}");
+                        newMinusIcon.setAttribute('alt', 'add icon');
+
+                        newMinusButton.appendChild(newMinusIcon);
+
+                        newSafeboxContainer.appendChild(newMinusButton);
+
+                        newSafebox.appendChild(newSafeboxContainer);
+
+                        var safeboxList = document.querySelector('.safebox-list');
+                        safeboxList.appendChild(newSafebox);
+                    } else {
+                        console.error('Erreur lors de la création du coffre fort');
+                    }
+                })
+                .catch(error => console.error('Erreur:', error));
+        });
+
+        document.querySelector('.create-safebox-btn').addEventListener('click', function () {
+            document.getElementById('create-safebox-form-container').style.display = 'none';
+            document.querySelector('.no-safebox-message').style.display = 'none';
+        });
+
+        function deleteSafebox(id) {
+            var csrfToken = getCookie('csrftoken');
+
+            fetch('deleteSafebox/' + id + '/', {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de la suppression du coffre-fort');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // Supprime l'élément du DOM
+                        var safebox = document.getElementById('safebox-' + id);
+                        safebox.parentNode.removeChild(safebox);
+                    } else {
+                        console.error('Erreur:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+        }
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
 
     </script>
 </body>
+
 </html>
