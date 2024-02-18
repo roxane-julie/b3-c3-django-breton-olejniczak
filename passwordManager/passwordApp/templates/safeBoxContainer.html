@@ -265,7 +265,7 @@
                     '</button>' +
                         '<button class="update-btn" onclick="enableInputs(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>' +
                         '<button class="random-btn random-update-btn" onclick="generatePassword(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon random-icon" src="/static/images/shuffle-solid.svg" alt="random icon"></button>' +
-                        '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>'
+                        '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>'
                 }else if (key === 'websiteUrl') {
                     inputType = 'url';
                     inputName = 'websiteUrl';
@@ -314,7 +314,6 @@
             data[fieldName] = fieldValue;
 
             var jsonData = JSON.stringify(data);
-            console.log('JSON', jsonData);
 
             fetch('updateField/' + fieldName + '/' + idValue + '/', {
                 method: 'PUT',

@@ -147,7 +147,11 @@ def updateField(request, field_name, id_value):
 
     # Mettez à jour le champ
     if field_name in data and hasattr(obj, field_name):
-        setattr(obj, field_name, data[field_name])
+        if field_name == 'password':
+            hashed_password = make_password(data[field_name])
+            setattr(obj, field_name, hashed_password)
+        else:
+            setattr(obj, field_name, data[field_name])
         obj.save()
         return JsonResponse({"success": "Field updated"}, status=200)
     else:
