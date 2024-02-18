@@ -36,7 +36,7 @@
                 <h2 class="dataCard-name" data-id="{{ passwordData.id }}" onclick="showCardInformations(this)">
                     {{passwordData.websiteName}}</h2>
 
-                <button id="delete-card" class="minus-btn" onclick="deleteCard(this)">
+                <button id="delete-card" class="minus-btn" onclick="deleteCard(this)" data-id="{{ passwordData.id }}">
 
                     <img class="input-icon minus-icon" src="/static/images/minus-solid.svg" alt="add icon">
                 </button>
@@ -94,9 +94,7 @@
     </button>
 
     <script>
-        // var urlParams = new URLSearchParams(window.location.search);
-        // var name = urlParams.get('name');
-        // document.getElementById('safebox-name').textContent = name;
+
         var isFirstRender = true;
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -259,23 +257,12 @@
             subContainer.innerHTML = htmlContent;
         }
 
-        //     function showCardInformations(passwordData) {
-        //     var container = document.querySelector('.dataCard-main-container');
-        //     console.log(passwordData.dataset.infos);
-        //     var websiteName = passwordData.dataset.websiteName;
-        //     var websiteUrl = passwordData.dataset.websiteUrl;
-        //     var password = passwordData.dataset.password;
-
-        //     Utilisez les données du mot de passe comme vous le souhaitez, par exemple, affichez-les dans la console pour le moment
-        //     console.log("Nom du site :", websiteName);
-        //     console.log("URL du site :", websiteUrl);
-        //     console.log("Mot de passe :", password);
-        // }
 
         function deleteCard(id) {
             var csrfToken = getCookie('csrftoken');
+            var idValue = id.dataset.id
 
-            fetch('/delete_card/' + id + '/', {
+            fetch('deleteCard/' + idValue + '/', {
                 method: 'DELETE',
                 headers: {
                     'X-CSRFToken': csrfToken
@@ -289,7 +276,7 @@
                 })
                 .then(data => {
                     if (data.success) {
-                        var card = document.getElementById('dataCard-' + id);
+                        var card = document.getElementById('dataCard-' + idValue);
                         card.parentNode.removeChild(card);
                     } else {
                         console.error('Erreur:', data.message);

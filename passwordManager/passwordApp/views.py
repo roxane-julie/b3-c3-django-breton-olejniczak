@@ -120,12 +120,12 @@ def deleteSafebox(request, safebox_id):
         return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
 @login_required
-def deleteCard(request, safebox_id):
+def deleteCard(request, password_data_id):
     print("fonction de suppression d'une carte")
     if request.method =='DELETE':
         try:
-            safebox = SafeBox.objects.get(id=safebox_id, user=request.user)
-        except SafeBox.DoesNotExist:
+            safebox = PassWordManagerDataModel.objects.get(id=password_data_id, user=request.user)
+        except PassWordManagerDataModel.DoesNotExist:
             return JsonResponse({'success': False, 'message': 'Carte non trouvée.'})
 
         safebox.delete()

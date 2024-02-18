@@ -27,7 +27,7 @@ urlpatterns = [
     path('manager/safeBoxContainer/', views.safeBoxContainer, name='safeBoxContainer'),
     path('manager/deleteSafebox/<int:safebox_id>/', views.deleteSafebox, name='deleteSafebox'),
     path('manager/safeBoxContainer/getPasswordData/<int:password_data_id>/', views.getPasswordData, name='getPasswordData'),
-    path('manager/safeBoxContainer/deleteCard/<int:password_data_id>/', views.deletePasswordData, name='deletePasswordData'),
+    path('manager/safeBoxContainer/deleteCard/<int:password_data_id>/', views.deleteCard, name='deleteCard'),
     path('createNewCard/', views.createNewCard, name='createNewCard'),
     path('signout/', views.signOut, name='signOut'),
 ]
