@@ -117,22 +117,17 @@
     <script>
 
         var isFirstRender = true;
-
         document.addEventListener('DOMContentLoaded', function () {
             if (isFirstRender) {
                 var toSafeboxBtn = document.querySelector('.goTopasswordList');
-
-                // Cachez toSafeboxBtn
                 toSafeboxBtn.style.display = 'none';
-
-                // Mettez à jour isFirstRender
                 isFirstRender = false;
             }
         });
 
+        ////////////////////////  GENERER MOT DE PASSE ALEATOIRE  //////////////////////////
         function generatePassword(event, input) {
             event.preventDefault();
-            console.log('INPUT',input)
 
             var passwordInput = document.querySelector('#password-input');
 
@@ -145,10 +140,9 @@
             input.value = retVal;
         }
 
+    ////////////////////////  VOIR / CACHER MOT DE PASSE  //////////////////////////
         function togglePasswordVisibility(event, input) {
             event.preventDefault();
-            console.log('TOGGLE');
-            console.log('INPUT TOGGLE', input);
             var passwordInput = document.getElementById('password-input');
         if (input.type === "password") {
             input.type = "text";
@@ -157,12 +151,15 @@
         }
     }
 
+        ////////////////////////  RETOUR ARRIERE  //////////////////////////
         function goBack() {
             window.history.back();
         }
 
+        ////////////////////////  AJOUT FONCTION SUBMIT A LA CREATION D'UNE NOUVELLE CARD  //////////////////////////
         document.querySelector('#createNewCardForm').addEventListener('submit', submitForm);
 
+        ////////////////////////  AFFICHAGE RETOUR A LA LISTE DES MOTS DE PASSE  //////////////////////////
         function goBackToPasswordList() {
             var displayPasswordData = document.querySelector('.display-password-data');
             var passwordDataList = document.querySelector('.password-data-list');
@@ -171,7 +168,6 @@
             var titleContainer = document.querySelector('.title-container');
             var addButton = document.querySelector('.add-card-btn');
 
-            // Cachez displayPasswordData et affichez passwordDataList
             displayPasswordData.style.display = 'none';
             passwordDataList.style.display = 'block';
             goBackButton.style.display = 'flex';
@@ -179,6 +175,7 @@
             addButton.style.display = 'flex';
         }
 
+        ////////////////////////  CHANGEMENT DE VUE AFFICHAGE  D'UNE CARD DE MOT DE PASSE  //////////////////////////
         function showCreateNewCardForm() {
             var form = document.getElementById('createNewCardForm-container');
             form.style.display = 'flex';
@@ -201,16 +198,11 @@
             });
         };
 
+    ////////////////////////  AFFICHAGE DONNEES D'UNE CARD DE MOT DE PASSE  //////////////////////////
         function showCardInformations(id) {
-            console.log("ID",id);
-
             var passwordListContainer = document.querySelector('.password-data-list');
-
             passwordListContainer.style.display = 'none';
 
-
-            // Changez le texte du bouton
-            // goBackButton.textContent = 'Revenir à la liste des mots de passe';
             var idValue = id.dataset ? id.dataset.id : id;
             var csrfToken = getCookie('csrftoken');
 
@@ -227,8 +219,6 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
-                    // Appeler une fonction pour afficher les informations du mot de passe
                     displayPasswordData(data.passwordDatas);
                 })
                 .catch(error => {
@@ -236,19 +226,18 @@
                 });
         }
 
+        ////////////////////////  AFFICHAGE DONNEES D'UNE CARD DE MOT DE PASSE STEP 2 //////////////////////////
         function displayPasswordData(passwordData) {
-            console.log('PASSWORDATA',passwordData)
             var titleSafebox = document.querySelector('#title-safebox');
             var titleContainer = document.querySelector('#title-secret-card');
             var safeboxName = document.querySelector('#safebox-name');
 
-            // titleContainer.innerHTML = 'Carte d\'informations secrètes <br><span id="safebox-name">' + passwordData.websiteName + '</span>';
             var addButton = document.querySelector('.add-card-btn');
             titleSafebox.style.display = 'none';
             titleContainer.style.display = 'flex';
-            // Faites disparaître le bouton
+
             addButton.style.display = 'none';
-            // Sélectionnez l'élément où vous voulez afficher les données
+
             var goBackButton = document.querySelector('.goback-btn');
             var goTopasswordListBtn = document.querySelector('.goTopasswordList');
             var subContainer = document.querySelector('.display-password-data');
@@ -259,12 +248,10 @@
 
             var htmlContent = '';
 
-            // Parcourez chaque élément de passwordData
             for (var key in passwordData) {
-                // Si la clé est 'safebox' ou 'id', continuez à la prochaine itération
                 if (key === 'safebox' || key === 'id') continue;
 
-                var inputType = 'text'; // Par défaut, le type d'input est 'text'
+                var inputType = 'text';
                 var inputLabel = '';
 
 
@@ -273,7 +260,6 @@
                 inputName = 'password';
                 inputLabel = 'password';
 
-                // Si l'input est de type password, ajoutez le bouton de visibilité
                 htmlContent +=
                     '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card password-card-input update-input-password disabled-input" data-id="'+ passwordData.id+'" name="'+ inputName + '" type="' + inputType + '" value="' + '" disabled>' + '<button class="toggle-password random-btn toggle-update" onclick="togglePasswordVisibility(event,this.previousElementSibling)">' +
                     '<img class="input-icon visibility-icon" src="/static/images/eye-solid.svg" alt="toggle visibility">' +
@@ -302,23 +288,20 @@
 
                     htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" data-id="'+ passwordData.id+'"name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
                     + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
-                }
-
-                // Ajoutez le label et l'input à htmlContent
-                
+                }          
             }
 
-            htmlContent += '</div>'; // Fermez la div .inputs-data-container
-
-            // Mettez à jour le contenu HTML de container
+            htmlContent += '</div>';
             subContainer.innerHTML = htmlContent;
         }
 
+        ////////////////////////  ENABLE INPUTS //////////////////////////
         function enableInputs(event, input) {
             event.preventDefault();
             input.removeAttribute('disabled');
         }
 
+        ////////////////////////  FONCTION UPDATE DE CHAMPS DANS PASSWORDMANAGERDATAMODEL //////////////////////////
         function updateField(event, field){
             var csrfToken = getCookie('csrftoken');
             fieldName = field.getAttribute('name');
@@ -345,7 +328,6 @@
                 return response.json();
             })
             .then(data => {
-                console.log('Success:', data);
                 var messageDiv = document.getElementById('update-field-modal');
                 messageDiv.style.display = 'flex';
                 messageDiv.innerHTML = 'Le champ ' + fieldName + ' a été modifié' + '<button id="check" class="update-btn minus-btn update-field-check"><img src="/static/images/check-solid.svg" alt="check icon"></button>';
@@ -359,7 +341,7 @@
                         
         }
 
-
+////////////////////////  FONCTION DELETE CARD DE MOT DE PASSE //////////////////////////
         function deleteCard(id) {
             var csrfToken = getCookie('csrftoken');
             var idValue = id.dataset.id
@@ -389,6 +371,7 @@
                 });
         }
 
+        ////////////////////////  SOUMISSION POUR AFFICHER NOUVELLE CARD EN AJAX  //////////////////////////
         function submitForm(event) {
             event.preventDefault();
 
@@ -407,11 +390,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        console.log(data);
-                        // Afficher la nouvelle carte
-                        
-                        // Cacher le formulaire
-                        form.reset(); // Réinitialiser le formulaire
+                        form.reset();
                         form.style.display = 'none';
                         
                         goBackToPasswordList();
@@ -434,7 +413,6 @@
                         titleList.style.display = 'flex';
 
                         passwordList.appendChild(newCard);
-
                     }
                 })
                 .catch((error) => {
@@ -442,6 +420,7 @@
                 });
         }
 
+        ////////////////////////  AFFICHAGE FORMULAIRE CSV //////////////////////////
         function displayCsvForm() {
             var form = document.getElementById('import-from-csv');
             var btn = document.getElementById('add-card-btn');
@@ -449,7 +428,10 @@
             btn.style.display = 'none';
         }
 
+
+        //////////////////////// FONCTION SOUMISSION FICHIER CSV //////////////////////////
     function submitCsvData() {
+        //FONCTIONNEL MAIS AFFICHAGE AJAX A TERMINER RECHARGER LA PAGE POUR VERIFIER
     document.getElementById('import-from-csv').addEventListener('submit', function(event) {
         event.preventDefault();
         var formData = new FormData(event.target);
@@ -484,6 +466,8 @@ document.getElementById('csv_file').addEventListener('change', function() {
     }
 });
 
+
+        ////////////////////////  GENERATION COOKIE CSRF //////////////////////////
         function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -499,7 +483,6 @@ document.getElementById('csv_file').addEventListener('change', function() {
             return cookieValue;
         }
 
-        // document.getElementById('createNewCardForm').addEventListener('submit', submitForm);
     </script>
 </body>
 

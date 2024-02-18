@@ -47,7 +47,7 @@
             <img class="input-icon" src="{% static 'images/plus-solid.svg' %}" alt="add icon">
         </button>
     </div>
-    <!-- Ajoutez plus de cartes ici -->
+    
     </div>
     <script>
         var addButton = document.querySelector('.add-safebox-button');
@@ -56,13 +56,11 @@
 
         addButton.addEventListener('click', function () {
             addButton.style.display = 'none';
-            console.log("Le bouton disparait")
             formContainer.style.display = 'flex';
         });
 
         createButton.addEventListener('click', function () {
             addButton.style.display = 'flex';
-            console.log("Le bouton apparait");
             if (formContainer.style.display !== 'flex') {
                 formContainer.style.display = 'none';
             }
@@ -70,16 +68,14 @@
 
         function showSafebox(id) {
             var safebox = document.getElementById('safebox-' + id);
-            console.log(safebox);
-            // // Récupère le nom du coffre
+            
             var safeboxNameElement = safebox.querySelector('.safebox-name');
-            console.log(safeboxNameElement);
+            
             var safeboxName = safeboxNameElement.textContent || safeboxNameElement.innerText;
-            console.log(safeboxName);
+         
 
             fetch('?id=' + encodeURIComponent(id))
                 .catch(error => console.error('Error:', error));
-            // // Redirige vers safeBoxContainer.html avec le nom en paramètre
             window.location.href = 'safeBoxContainer/?id=' + encodeURIComponent(id);
         }
 
@@ -161,7 +157,7 @@
                 })
                 .then(data => {
                     if (data.success) {
-                        // Supprime l'élément du DOM
+                        
                         var safebox = document.getElementById('safebox-' + id);
                         safebox.parentNode.removeChild(safebox);
                     } else {
