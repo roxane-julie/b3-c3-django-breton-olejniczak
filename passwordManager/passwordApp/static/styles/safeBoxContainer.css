@@ -235,7 +235,7 @@ label {
 }
 
 .update-submit-btn{
-    margin-left: 1rem;
+    margin-left: 0.7rem;
 }
 
 .input-group{
@@ -474,4 +474,17 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 .update-field-check{
     margin: 0!important;
     background-color: #27b1a1!important;
+}
+
+.random-update-btn{
+    margin-left: 0.7rem;
+    margin-right: 0;
+}
+
+.toggle-update{
+    margin-right: 0.7rem;
+}
+
+.update-input-password {
+    margin-left: 2.3rem!important;
 }

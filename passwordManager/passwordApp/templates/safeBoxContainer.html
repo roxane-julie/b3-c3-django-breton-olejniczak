@@ -76,7 +76,7 @@
                                 alt="toggle visibility">
                         </button>
                         <button class="random-btn"
-                            onclick="generatePassword(event)">
+                            onclick="generatePassword(event, this.previousElementSibling.previousElementSibling)">
                             <img class="input-icon random-icon" src="/static/images/shuffle-solid.svg"
                                 alt="random icon">
                         </button>
@@ -115,8 +115,9 @@
             }
         });
 
-        function generatePassword(event) {
+        function generatePassword(event, input) {
             event.preventDefault();
+            console.log('INPUT',input)
 
             var passwordInput = document.querySelector('#password-input');
 
@@ -126,7 +127,7 @@
             for (var i = 0, n = charset.length; i < length; ++i) {
                 retVal += charset.charAt(Math.floor(Math.random() * n));
             }
-            passwordInput.value = retVal;
+            input.value = retVal;
         }
 
         function togglePasswordVisibility(event, input) {
@@ -259,11 +260,12 @@
 
                 // Si l'input est de type password, ajoutez le bouton de visibilité
                 htmlContent +=
-                    '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card password-card-input disabled-input" data-id="'+ passwordData.id+'" name="'+ inputName + '" type="' + inputType + '" value="' + '" disabled>' + '<button class="toggle-password random-btn" onclick="togglePasswordVisibility(event,this.previousElementSibling)">' +
+                    '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card password-card-input update-input-password disabled-input" data-id="'+ passwordData.id+'" name="'+ inputName + '" type="' + inputType + '" value="' + '" disabled>' + '<button class="toggle-password random-btn toggle-update" onclick="togglePasswordVisibility(event,this.previousElementSibling)">' +
                     '<img class="input-icon visibility-icon" src="/static/images/eye-solid.svg" alt="toggle visibility">' +
                     '</button>' +
                         '<button class="update-btn" onclick="enableInputs(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>' +
-                        '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>'
+                        '<button class="random-btn random-update-btn" onclick="generatePassword(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon random-icon" src="/static/images/shuffle-solid.svg" alt="random icon"></button>' +
+                        '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>'
                 }else if (key === 'websiteUrl') {
                     inputType = 'url';
                     inputName = 'websiteUrl';
