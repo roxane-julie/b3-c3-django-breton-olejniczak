@@ -6,6 +6,7 @@ import bcrypt
 class PassWordManagerDataModel(models.Model):
     websiteName = models.CharField(max_length=100)
     websiteUrl = models.URLField(blank=True, default='')
+    userName = models.CharField(max_length=100, default='')
     password = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     safebox = models.ForeignKey('SafeBox', on_delete=models.CASCADE, related_name='password_data')

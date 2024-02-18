@@ -141,7 +141,7 @@ def safeBoxContainer(request):
 
     safebox_dict = model_to_dict(safebox)
 
-    password_data = safebox.password_data.all().values('id','websiteName', 'websiteUrl', 'password')
+    password_data = safebox.password_data.all().values('id','websiteName', 'websiteUrl', 'userName', 'password')
     print(f"SAFEBOX DEBUG", list(password_data))
     print(f"SAFEBOX", safebox.name)
 
@@ -155,6 +155,7 @@ def getPasswordData(request, password_data_id):
             'id': password_data.id,
             'websiteName': password_data.websiteName,
             'websiteUrl': password_data.websiteUrl,
+            'userName': password_data.userName,
             'password': password_data.password,
             'safebox': password_data.safebox.id
         }
@@ -170,6 +171,7 @@ def createNewCard(request):
         if form.is_valid():
             websiteName = form.cleaned_data['websiteName']
             websiteUrl = form.cleaned_data['websiteUrl']
+            userName = form.cleaned_data['userName']
             password = form.cleaned_data['password']
             user = request.user
 
@@ -181,6 +183,7 @@ def createNewCard(request):
             try:
                 new_passwordData = PassWordManagerDataModel.objects.create(
                     websiteName=websiteName, websiteUrl=websiteUrl, password=hashed_password,
+                    userName=userName,
                     user=user, safebox=safebox)
                 data = {
                     'success': True,
@@ -189,6 +192,7 @@ def createNewCard(request):
                         'id': new_passwordData.id,
                         'websiteName': new_passwordData.websiteName,
                         'websiteUrl': new_passwordData.websiteUrl,
+                        'userName': new_passwordData.userName,
                         'password': new_passwordData.password,
                         'safebox': new_passwordData.safebox.id
                     }
