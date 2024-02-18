@@ -257,7 +257,7 @@
 
                 // Si l'input est de type password, ajoutez le bouton de visibilité
                 htmlContent +=
-                    '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card password-card-input disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + '" disabled>' + '<button class="toggle-password random-btn" onclick="togglePasswordVisibility(event,this.previousElementSibling)">' +
+                    '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card password-card-input disabled-input" data-id="'+ passwordData.id+'" name="'+ inputName + '" type="' + inputType + '" value="' + '" disabled>' + '<button class="toggle-password random-btn" onclick="togglePasswordVisibility(event,this.previousElementSibling)">' +
                     '<img class="input-icon visibility-icon" src="/static/images/eye-solid.svg" alt="toggle visibility">' +
                     '</button>' +
                         '<button class="update-btn" onclick="enableInputs(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>' +
@@ -267,21 +267,21 @@
                     inputName = 'websiteUrl';
                     inputLabel = 'Adresse du site'
 
-                    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
+                    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" data-id="'+ passwordData.id+'" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
                     + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
                 } else if (key === 'userName') {
                     inputType = 'text';
                     inputName = 'userName';
                     inputLabel = "Nom d'utilisateur";
 
-                    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
+                    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" data-id="'+ passwordData.id+'" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
                     + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
                 } else if (key === 'websiteName') {
                     inputType = 'text';
                     inputName = 'websiteName';
                     inputLabel = 'Nom du site'
 
-                    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
+                    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" data-id="'+ passwordData.id+'"name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
                     + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
                 }
 
@@ -301,7 +301,40 @@
         }
 
         function updateField(event, field){
-            console.log('FIELD', field);
+            var csrfToken = getCookie('csrftoken');
+            fieldName = field.getAttribute('name');
+            fieldValue = field.value;
+            idValue = field.dataset.id;
+
+                // Créez un objet avec le nom du champ et la nouvelle valeur
+            var data = {};
+            data[fieldName] = fieldValue;
+
+            // Convertissez l'objet en JSON
+            var jsonData = JSON.stringify(data);
+            console.log('JSON', jsonData);
+
+            fetch('updateField/' + fieldName + '/' + idValue + '/', {
+                method: 'PUT', // ou 'PATCH'
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: jsonData,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+                        
         }
 
 

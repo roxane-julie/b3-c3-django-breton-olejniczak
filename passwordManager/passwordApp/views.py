@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import make_password
 from .models import SafeBox, PassWordManagerDataModel
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+import json
 
 def index(request):
     return render(request, 'index.html')
@@ -133,6 +134,24 @@ def deleteCard(request, password_data_id):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method.'})
 
+def updateField(request, field_name, id_value):
+    if request.body:
+        data = json.loads(request.body)
+    else:
+        return JsonResponse({"error": "Invalid JSON data"}, status=400)
+
+    try:
+        obj = PassWordManagerDataModel.objects.get(id=id_value)
+    except PassWordManagerDataModel.DoesNotExist:
+        return JsonResponse({"error": "Object not found"}, status=404)
+
+    # Mettez à jour le champ
+    if field_name in data and hasattr(obj, field_name):
+        setattr(obj, field_name, data[field_name])
+        obj.save()
+        return JsonResponse({"success": "Field updated"}, status=200)
+    else:
+        return JsonResponse({"error": "Invalid field name"}, status=400)
 
 def safeBoxContainer(request):
     safebox_id = request.GET.get('id')
