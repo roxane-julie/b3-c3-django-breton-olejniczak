@@ -28,6 +28,8 @@
         </div>
 
         <div class="display-password-data"></div>
+        <div id="update-field-modal" style="display: none;">
+        </div>
         <div class="password-data-list">
             {% if passwordDatas %}
             {% for passwordData in passwordDatas %}
@@ -306,16 +308,14 @@
             fieldValue = field.value;
             idValue = field.dataset.id;
 
-                // Créez un objet avec le nom du champ et la nouvelle valeur
             var data = {};
             data[fieldName] = fieldValue;
 
-            // Convertissez l'objet en JSON
             var jsonData = JSON.stringify(data);
             console.log('JSON', jsonData);
 
             fetch('updateField/' + fieldName + '/' + idValue + '/', {
-                method: 'PUT', // ou 'PATCH'
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': csrfToken,
@@ -330,6 +330,12 @@
             })
             .then(data => {
                 console.log('Success:', data);
+                var messageDiv = document.getElementById('update-field-modal');
+                messageDiv.style.display = 'flex';
+                messageDiv.innerHTML = 'Le champ ' + fieldName + ' a été modifié' + '<button id="check" class="update-btn minus-btn update-field-check"><img src="/static/images/check-solid.svg" alt="check icon"></button>';
+                setTimeout(function() {
+                    messageDiv.style.display = 'none';
+                }, 3000);
             })
             .catch((error) => {
                 console.error('Error:', error);
