@@ -69,7 +69,7 @@
                     <label for="password">Mot de passe</label>
                     <div class="input-wrapper">
                         <input type="password" id="password-input" name="password" class="input-card" required>
-                        <button class="toggle-password random-btn" onclick="togglePasswordVisibility(event);">
+                        <button class="toggle-password random-btn" onclick="togglePasswordVisibility(event, this.previousElementSibling);">
                             <img class="input-icon visibility-icon" src="/static/images/eye-solid.svg"
                                 alt="toggle visibility">
                         </button>
@@ -127,15 +127,17 @@
             passwordInput.value = retVal;
         }
 
-        function togglePasswordVisibility(event) {
+        function togglePasswordVisibility(event, input) {
             event.preventDefault();
+            console.log('TOGGLE');
+            console.log('INPUT TOGGLE', input);
             var passwordInput = document.getElementById('password-input');
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-            } else {
-                passwordInput.type = "password";
-            }
+        if (input.type === "password") {
+            input.type = "text";
+        } else {
+            input.type = "password";
         }
+    }
 
         function goBack() {
             window.history.back();
@@ -217,7 +219,7 @@
         }
 
         function displayPasswordData(passwordData) {
-            console.log(passwordData)
+            console.log('PASSWORDATA',passwordData)
             var titleSafebox = document.querySelector('#title-safebox');
             var titleContainer = document.querySelector('#title-secret-card');
             var safeboxName = document.querySelector('#safebox-name');
@@ -247,29 +249,59 @@
                 var inputType = 'text'; // Par défaut, le type d'input est 'text'
                 var inputLabel = '';
 
-                // Déterminez le type d'input en fonction de la clé
+
                 if (key === 'password') {
-                    inputType = 'password';
-                    inputLabel = 'password';
-                } else if (key === 'websiteUrl') {
+                inputType = 'password';
+                inputName = 'password';
+                inputLabel = 'password';
+
+                // Si l'input est de type password, ajoutez le bouton de visibilité
+                htmlContent +=
+                    '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card password-card-input disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + '" disabled>' + '<button class="toggle-password random-btn" onclick="togglePasswordVisibility(event,this.previousElementSibling)">' +
+                    '<img class="input-icon visibility-icon" src="/static/images/eye-solid.svg" alt="toggle visibility">' +
+                    '</button>' +
+                        '<button class="update-btn" onclick="enableInputs(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>' +
+                        '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>'
+                }else if (key === 'websiteUrl') {
                     inputType = 'url';
+                    inputName = 'websiteUrl';
                     inputLabel = 'Adresse du site'
+
+                    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
+                    + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
                 } else if (key === 'userName') {
                     inputType = 'text';
-                    inputLabel = "Nom d'utilisateur"
+                    inputName = 'userName';
+                    inputLabel = "Nom d'utilisateur";
+
+                    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
+                    + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
                 } else if (key === 'websiteName') {
                     inputType = 'text';
+                    inputName = 'websiteName';
                     inputLabel = 'Nom du site'
+
+                    htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
+                    + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
                 }
 
                 // Ajoutez le label et l'input à htmlContent
-                htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button></div>';
+                
             }
 
             htmlContent += '</div>'; // Fermez la div .inputs-data-container
 
             // Mettez à jour le contenu HTML de container
             subContainer.innerHTML = htmlContent;
+        }
+
+        function enableInputs(event, input) {
+            event.preventDefault();
+            input.removeAttribute('disabled');
+        }
+
+        function updateField(event, field){
+
         }
 
 

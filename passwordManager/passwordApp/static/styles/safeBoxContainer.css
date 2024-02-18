@@ -230,6 +230,14 @@ label {
     width: 120px;
 }
 
+.password-card-input{
+    margin-left: 2rem!important;
+}
+
+.update-submit-btn{
+    margin-left: 1rem;
+}
+
 .input-group{
     display: flex;
     flex-direction: row;
