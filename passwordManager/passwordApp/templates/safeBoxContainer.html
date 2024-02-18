@@ -305,12 +305,28 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
+                        console.log(data);
+                        // Afficher la nouvelle carte
+                        
                         // Cacher le formulaire
+                        form.reset(); // Réinitialiser le formulaire
                         form.style.display = 'none';
+                        
+                        goBackToPasswordList();
+                        var passwordList = document.querySelector('.password-data-list');
+                        var newCard = document.createElement('div');
+                        newCard.innerHTML = `
+                            <div id="dataCard-${data.passwordData.id}" class="dataCard-name-container">
+                                <h2 class="dataCard-name" data-id="${data.passwordData.id}" onclick="showCardInformations(this)">
+                                    ${data.passwordData.websiteName}
+                                </h2>
+                                <button id="delete-card" class="minus-btn" onclick="deleteCard(this)" data-id="${data.passwordData.id}">
+                                    <img class="input-icon minus-icon" src="/static/images/minus-solid.svg" alt="add icon">
+                                </button>
+                            </div>
+                        `;
 
-                        // Afficher la div de succès
-                        var successDiv = document.getElementById('success');
-                        successDiv.style.display = 'block';
+                        passwordList.appendChild(newCard);
                     }
                 })
                 .catch((error) => {
