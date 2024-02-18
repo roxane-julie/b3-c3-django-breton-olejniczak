@@ -9,7 +9,7 @@ class PassWordManagerDataModel(models.Model):
     userName = models.CharField(max_length=100, default='')
     password = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    safebox = models.ForeignKey('SafeBox', on_delete=models.CASCADE, related_name='password_data')
+    safebox = models.ForeignKey('SafeBox', on_delete=models.CASCADE, related_name='password_data', null=True)
 
     def get_website_name(self):
         return self.websiteName

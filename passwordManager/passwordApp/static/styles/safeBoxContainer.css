@@ -56,7 +56,6 @@ span {
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    margin-bottom: 2em;
 }
 
 /* Style the scrollbar */
@@ -88,7 +87,7 @@ span {
     min-height: 55vh;
     border-radius: 20px;
     padding: 1em;
-    max-height: 70vh;
+    max-height: 72vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -267,6 +266,27 @@ label {
     justify-content: space-evenly;
     align-items: center;
     color: #f3e6ca;
+    z-index: 5;
+}
+
+#csv-success{
+    position: absolute;
+    top: 3.5rem;
+    right: 4rem;
+    font-family:'NeuSharp';
+    font-size: 0.8em;
+    height: 20px;
+    background-color: rgba(15, 24, 30, 0.8);
+    width: 28.5vw;
+    border-radius: 20px;
+    padding: 1em 2em;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #f3e6ca;
+    z-index: 5;
 }
 
 #password-input {
@@ -487,4 +507,89 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 
 .update-input-password {
     margin-left: 2.3rem!important;
+}
+
+.add-csv-btn{
+    width: 40px;
+    height: 40px;
+    align-self: center;
+    font-size: 0.8em;
+    border-radius: 50%;
+    padding: 10px;
+    color: #f3e6ca!important;
+    background-color: #e4782f!important;
+    border: none!important;
+    cursor: pointer;
+    font-family: 'NeuSharp'!important;
+    transition: font-size 0.3s ease;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-csv-btn:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(132, 132, 132, 0.918);
+}
+
+.csv-btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 10vw;
+    position: absolute;
+    top: 4rem;
+    left: 64%;
+    z-index: 0;
+}
+
+#import-from-csv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+#import-from-csv input {
+    font-family: 'NeuSharp', sans-serif;
+    color: bisque;
+}
+
+#import-from-csv input[type="file"] {
+    display: none;
+}
+
+#import-from-csv label,
+#import-from-csv button[type="submit"] {
+    font-family: 'NeuSharp', sans-serif;
+    color: bisque;
+    /* Ajoutez d'autres styles ici */
+    padding: 5px;
+    cursor: pointer;
+    background-color: #113f5c7d!important;
+    border-radius: 12px;
+    border: none!important;
+    width: 150px;
+    text-align: center;
+    margin: 0;
+}
+
+.import-btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+    
+.label-csv-form-message{
+font-family: 'NeuSharp', sans-serif;
+color: bisque;
+font-size: 0.75em;
+font-style: italic;
+margin: 0 1rem;
 }

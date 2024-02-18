@@ -2,13 +2,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from .forms import SignUpForm, LoginForm, CreateNewSafeBox, CreateNewCard
 from django.contrib.auth.hashers import make_password
 from .models import SafeBox, PassWordManagerDataModel
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+from django.views.decorators.csrf import csrf_exempt
 import json
+import csv
 
 def index(request):
     return render(request, 'index.html')
@@ -105,6 +108,38 @@ def myPasswordsManager(request):
 
     return render(request, 'myPasswordsManager.html', {'form': form, 'safeboxes': safeboxes, 'name': name, 'id': safebox_id, 'active_tab': 'manager', 'safebox_count': safebox_count})
 
+@csrf_exempt
+def import_from_csv(request, safebox_id):
+    if request.method == 'POST':
+        csv_file = request.FILES['csv_file']
+        reader = csv.reader(csv_file.read().decode('utf-8').splitlines())
+        next(reader)  # Skip the header row
+        for row in reader:
+            websiteName, websiteUrl, userName, password = row
+            PassWordManagerDataModel.objects.create(
+                websiteName=websiteName,
+                websiteUrl=websiteUrl,
+                userName=userName,
+                password=password,
+                user=request.user,
+                safebox_id=safebox_id
+            )
+        return JsonResponse({"success": "Data imported from CSV"}, status=200)
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=400)
+
+def export_to_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="password_data.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['websiteName', 'websiteUrl', 'userName', 'password'])
+
+    for obj in PassWordManagerDataModel.objects.all():
+        writer.writerow([obj.websiteName, obj.websiteUrl, obj.userName, obj.password]) 
+
+    return response
+
 @login_required
 def deleteSafebox(request, safebox_id):
     print('Cest la fonction delete')
@@ -168,7 +203,7 @@ def safeBoxContainer(request):
     print(f"SAFEBOX DEBUG", list(password_data))
     print(f"SAFEBOX", safebox.name)
 
-    return render(request, 'safeBoxContainer.html', {'passwordDatas': list(password_data), 'safebox': safebox_dict, 'safebox_name': safebox.name})
+    return render(request, 'safeBoxContainer.html', {'passwordDatas': list(password_data), 'safebox': safebox_dict, 'safebox_name': safebox.name, 'safebox_id': safebox.id})
 
 def getPasswordData(request, password_data_id):
     print('JE SUIS GETPASSWORD')

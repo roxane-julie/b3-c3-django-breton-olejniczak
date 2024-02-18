@@ -47,11 +47,27 @@
             {% endfor %}
             {% else %}
             <p>Aucun mot-de-passe enregistré</p>
-            {% endif %}
-
+            {% endif %} 
         </div>
-
-        <button class="add-card-btn" onclick="showCreateNewCardForm()">Ajouter un mot de passe</button>
+        <div id="csv-success" style="display: none;"></div>
+        <form id="import-from-csv" method="POST" action="{% url 'import_from_csv' safebox_id=safebox_id %}" enctype="multipart/form-data"
+        style="display: none;">
+            {% csrf_token %}
+            <div class="import-btns">
+                <input type="file" id="csv_file" name="csv_file" accept=".csv">
+                <label class="label-csv-form" for="csv_file">Choisir un fichier csv</label>
+                <div class="label-csv-form-message">Aucun fichier choisi</div>
+            <button type="submit" onclick="submitCsvData()">Importer</button>
+            </div>
+        </form>
+        <button id="add-card-btn" class="add-card-btn" onclick="showCreateNewCardForm()">Ajouter un mot de passe</button>
+        <div class="csv-btns">
+            <button id="add-csv-btn" class="add-csv-btn" onclick="displayCsvForm()"><img class="input-icon minus-icon" src="/static/images/file-import-solid.svg" alt="file import icon"></button>
+            <button id="export-csv-btn" class="add-csv-btn" onclick="window.location.href='{% url 'export_to_csv' %}'">
+                <img class="input-icon minus-icon" src="/static/images/arrow-up-from-bracket-solid.svg" alt="file export icon">
+            </button>
+        </div>
+        
         <div id="createNewCardForm-container" style="display: none;">
             <form id="createNewCardForm" method="POST" action="{% url 'createNewCard' %}">
                 {% csrf_token %}
@@ -82,7 +98,6 @@
                         </button>
                         </input>
                     </div>
-
                 </div>
                 <input type="hidden" name="id" value="{{ safebox.id }}">
                 <button type="submit" class="add-card-form-button">Créer</button>
@@ -426,6 +441,48 @@
                     console.error('Error:', error);
                 });
         }
+
+        function displayCsvForm() {
+            var form = document.getElementById('import-from-csv');
+            var btn = document.getElementById('add-card-btn');
+            form.style.display = 'flex';
+            btn.style.display = 'none';
+        }
+
+    function submitCsvData() {
+    document.getElementById('import-from-csv').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(event.target);
+        fetch(event.target.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            var messageDiv = document.getElementById('csv-success');
+                messageDiv.style.display = 'flex';
+                messageDiv.innerHTML = 'Données CSV importées avec succès' + '<button id="check" class="update-btn minus-btn update-field-check"><img src="/static/images/check-solid.svg" alt="check icon"></button>';
+                setTimeout(function() {
+                    messageDiv.style.display = 'none';
+                }, 3000);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+}
+
+document.getElementById('csv_file').addEventListener('change', function() {
+    var fileName = this.value.split('\\').pop();
+    if (fileName) {
+        document.querySelector('.label-csv-form-message').textContent = fileName;
+    } else {
+        document.querySelector('.label-csv-form-message').textContent = 'Aucun fichier choisi';
+    }
+});
 
         function getCookie(name) {
             var cookieValue = null;

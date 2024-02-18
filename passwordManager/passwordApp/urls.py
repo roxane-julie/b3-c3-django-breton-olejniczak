@@ -29,6 +29,8 @@ urlpatterns = [
     path('manager/safeBoxContainer/getPasswordData/<int:password_data_id>/', views.getPasswordData, name='getPasswordData'),
     path('manager/safeBoxContainer/deleteCard/<int:password_data_id>/', views.deleteCard, name='deleteCard'),
     path('manager/safeBoxContainer/updateField/<str:field_name>/<int:id_value>/', views.updateField, name='updateField'),
+    path('import_from_csv/<int:safebox_id>/', views.import_from_csv, name='import_from_csv'),
+     path('export_to_csv/', views.export_to_csv, name='export_to_csv'),
     path('createNewCard/', views.createNewCard, name='createNewCard'),
     path('signout/', views.signOut, name='signOut'),
 ]
