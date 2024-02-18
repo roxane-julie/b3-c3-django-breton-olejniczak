@@ -268,21 +268,21 @@
                     inputLabel = 'Adresse du site'
 
                     htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
-                    + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
+                    + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
                 } else if (key === 'userName') {
                     inputType = 'text';
                     inputName = 'userName';
                     inputLabel = "Nom d'utilisateur";
 
                     htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
-                    + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
+                    + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
                 } else if (key === 'websiteName') {
                     inputType = 'text';
                     inputName = 'websiteName';
                     inputLabel = 'Nom du site'
 
                     htmlContent += '<div class="input-group-infos"><label class="disabled-label">' + inputLabel + '</label><input class="input-card disabled-input" name="'+ inputName + '" type="' + inputType + '" value="' + passwordData[key] + '" disabled><button class="update-btn" onclick="enableInputs(event, this.previousElementSibling)"><img class="input-icon update-icon" src="/static/images/pencil-solid.svg" alt="add icon"></button>'
-                    + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
+                    + '<button class="update-btn update-submit-btn" onclick="updateField(event, this.previousElementSibling.previousElementSibling)"><img class="input-icon submit-icon" src="/static/images/check-solid.svg" alt="add icon"></button></div>';
                 }
 
                 // Ajoutez le label et l'input à htmlContent
@@ -301,7 +301,7 @@
         }
 
         function updateField(event, field){
-
+            console.log('FIELD', field);
         }
 
 
