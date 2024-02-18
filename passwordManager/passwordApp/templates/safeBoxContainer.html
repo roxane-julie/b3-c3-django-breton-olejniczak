@@ -182,6 +182,7 @@
         };
 
         function showCardInformations(id) {
+            console.log("ID",id);
 
             var passwordListContainer = document.querySelector('.password-data-list');
 
@@ -190,7 +191,7 @@
 
             // Changez le texte du bouton
             // goBackButton.textContent = 'Revenir à la liste des mots de passe';
-            var idValue = id.dataset.id
+            var idValue = id.dataset ? id.dataset.id : id;
             var csrfToken = getCookie('csrftoken');
 
             fetch('getPasswordData/' + idValue + '/', {
