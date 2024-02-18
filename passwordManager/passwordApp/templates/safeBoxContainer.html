@@ -62,15 +62,19 @@
                     <input type="url" id="websiteUrl" name="websiteUrl" class="input-card">
                 </div>
                 <div class="input-group">
+                    <label for="userName">Nom d'utilisateur</label>
+                    <input type="text" id="userName" name="userName" class="input-card">
+                </div>
+                <div class="input-group">
                     <label for="password">Mot de passe</label>
                     <div class="input-wrapper">
                         <input type="password" id="password-input" name="password" class="input-card" required>
-                        <button class="toggle-password random-btn" onclick="togglePasswordVisibility();">
+                        <button class="toggle-password random-btn" onclick="togglePasswordVisibility(event);">
                             <img class="input-icon visibility-icon" src="/static/images/eye-solid.svg"
                                 alt="toggle visibility">
                         </button>
                         <button class="random-btn"
-                            onclick="document.getElementById('password-input').value = generatePassword();">
+                            onclick="generatePassword(event)">
                             <img class="input-icon random-icon" src="/static/images/shuffle-solid.svg"
                                 alt="random icon">
                         </button>
@@ -79,7 +83,7 @@
 
                 </div>
                 <input type="hidden" name="id" value="{{ safebox.id }}">
-                <button type="submit" class="add-card-form-button"">Créer</button>
+                <button type="submit" class="add-card-form-button">Créer</button>
             </form>
         </div>
         <div id=" success" style="display: none;">Carte ajoutée avec succès
@@ -109,17 +113,22 @@
             }
         });
 
-        function generatePassword() {
+        function generatePassword(event) {
+            event.preventDefault();
+
+            var passwordInput = document.querySelector('#password-input');
+
             var length = 12,
                 charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*",
                 retVal = "";
             for (var i = 0, n = charset.length; i < length; ++i) {
                 retVal += charset.charAt(Math.floor(Math.random() * n));
             }
-            return retVal;
+            passwordInput.value = retVal;
         }
 
-        function togglePasswordVisibility() {
+        function togglePasswordVisibility(event) {
+            event.preventDefault();
             var passwordInput = document.getElementById('password-input');
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
@@ -131,6 +140,8 @@
         function goBack() {
             window.history.back();
         }
+
+        document.querySelector('#createNewCardForm').addEventListener('submit', submitForm);
 
         function goBackToPasswordList() {
             var displayPasswordData = document.querySelector('.display-password-data');
@@ -242,6 +253,9 @@
                 } else if (key === 'websiteUrl') {
                     inputType = 'url';
                     inputLabel = 'Adresse du site'
+                } else if (key === 'userName') {
+                    inputType = 'text';
+                    inputLabel = "Nom d'utilisateur"
                 } else if (key === 'websiteName') {
                     inputType = 'text';
                     inputLabel = 'Nom du site'
@@ -317,7 +331,7 @@
                         var newCard = document.createElement('div');
                         newCard.innerHTML = `
                             <div id="dataCard-${data.passwordData.id}" class="dataCard-name-container">
-                                <h2 class="dataCard-name" data-id="${data.passwordData.id}" onclick="showCardInformations(this)">
+                                <h2 class="dataCard-name" data-id="${data.passwordData.id}" onclick="showCardInformations(${data.passwordData.id})">
                                     ${data.passwordData.websiteName}
                                 </h2>
                                 <button id="delete-card" class="minus-btn" onclick="deleteCard(this)" data-id="${data.passwordData.id}">
@@ -326,7 +340,13 @@
                             </div>
                         `;
 
+                        var titleSafebox = document.querySelector('#title-safebox');
+                        titleSafebox.style.display = 'none';
+                        var titleList = document.querySelector('#title-secret-card');
+                        titleList.style.display = 'flex';
+
                         passwordList.appendChild(newCard);
+
                     }
                 })
                 .catch((error) => {
@@ -349,7 +369,7 @@
             return cookieValue;
         }
 
-        document.getElementById('createNewCardForm').addEventListener('submit', submitForm);
+        // document.getElementById('createNewCardForm').addEventListener('submit', submitForm);
     </script>
 </body>
 

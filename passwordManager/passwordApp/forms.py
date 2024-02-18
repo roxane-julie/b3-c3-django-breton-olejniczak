@@ -24,6 +24,7 @@ class CreateNewSafeBox(forms.Form):
 class CreateNewCard(forms.Form):
     websiteName = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'mysite'}))
     websiteUrl = forms.URLField(required=False, widget=forms.URLInput(attrs={'placeholder': 'http://mysite.fr'}))
+    userName = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'myUserName'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'monpassword'}))
 #Créer Ici un formulaire CreateNewCard en utilisant les champs définis dans le modèle PasswordManagerDataModel
     #AIDE
